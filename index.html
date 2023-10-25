@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+  
+  <head>
+  <title>NFL Offensive Play Predictor</title>
+  
+  <meta charset="utf-8">
+    
+  <style>
+    body {
+      background-color: black;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+    }
+  
+  .titleArea {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+  }
+  
+  .vizArea {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .filterSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 5px;
+  }
+  
+  .dropdown_container1 {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-right: 35px;
+  }
+  
+  .dropdown1 {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-right: 135px;
+  }
+  
+  .dropdown1 label {
+    display: block;
+    font-weight: bold;
+    font-size: 20px;
+    color: white;
+    margin-bottom: 5px;
+    height: 40px;
+  }
+  
+  .menu1 select {
+    font-size: 15px;
+    padding: 0;
+    margin-left: 5px;
+  }
+  
+  .dropdown_container2 {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  
+  .dropdown2 {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-right: 135px;
+  }
+  
+  .dropdown2 label {
+    display: block;
+    font-weight: bold;
+    font-size: 20px;
+    color: white;
+    margin-bottom: 5px;
+    height: 40px;
+  }
+  
+  .menu2 select {
+    font-size: 15px;
+    padding: 0;
+    margin-left: 5px;
+  }
+  
+  .fieldSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 5px;
+  }
+  
+  .buttons {
+    font-size: 20;
+  }
+  
+  
+  </style>
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rye&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Keania+One&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Passion+One&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jockey+One&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Galada&display=swap">
+    
+    </head>
+    
+    <body>
+    
+    <!-- <script type="text/javascript" src="lib/d3-legend.min.js"></script> -->
+    <!-- <script type="text/javascript" src="lib/d3-tip.min.js"></script> -->
+    <script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
+    <script type="text/javascript" src="https://d3js.org/d3-dsv.v2.min.js"></script>
+    
+    <div class = 'titleArea'></div>
+    
+    <div class = 'vizArea'>
+     <div class = 'filterSection'>
+        <div class = 'dropdown_container1'>
+            <div class = 'dropdown1'>
+              <label for = 'teamDropdown'>Team:</label>
+              <div class = 'menu1'>
+                <select id = 'teamDropdown'></select>
+              </div>
+            </div>
+            <div class = 'dropdown1'>
+              <label for = 'gameClockDropdown'>Game Clock:</label>
+              <div class = 'menu1'>
+                <select id = 'gameClockDropdown'></select>
+              </div>
+            </div>
+            <div class = 'dropdown1'>
+              <label for = 'quarterDropdown'>Quarter:</label>
+              <div class = 'menu1'>
+                <select id = 'quarterDropdown'></select>
+              </div>
+            </div>
+            <div class = 'dropdown1'>
+              <label for = 'downDropdown'>Down:</label>
+              <div class = 'menu1'>
+                <select id = 'downDropdown'></select>
+              </div>
+            </div>            
+            <div class = 'dropdown1'>
+              <label for = 'distanceDropdown'>Distance:</label>
+              <div class = 'menu1'>
+                <select id = 'distanceDropdown'></select>
+              </div>
+            </div>            
+            <div class = 'dropdown1'>
+              <label for = 'losDropdown'>Line of Scrimmage:</label>
+              <div class = 'menu1'>
+                <select id = 'losDropdown' value='50'></select>
+              </div>
+            </div>
+          </div>
+        <div class = 'dropdown_container2'>
+          <div class = 'dropdown2'>
+            <label for = 'offHomeAwayDropdown'>Home/Away:</label>
+            <div class = 'menu2'>
+              <select id = 'offHomeAwayDropdown'></select> 
+            </div>
+          </div>
+          <div class = 'dropdown2'>
+            <label for = 'offPointDiffDropdown'>Offensive Point Difference:</label>
+            <div class = 'menu2'>
+              <select id = 'offPointDiffDropdown'></select>
+            </div>
+          </div>
+          <div class = 'dropdown2'>
+            <label for = 'remainingOffTOsDropdown'>Remaining Offensive TOs:</label>
+            <div class = 'menu2'>
+              <select id = 'remainingOffTOsDropdown'></select>
+            </div>
+          </div>
+          <div class = 'dropdown2'>
+            <label for = 'remainingDefTOsDropdown'>Remaining Defensive TOs:</label>
+            <div class = 'menu2'>
+              <select id = 'remainingDefTOsDropdown'></select>
+            </div>
+          </div>
+        </div>
+      </div>
+     <div class = 'buttons'>
+          <button id = 'filterButton'>Click to Calculate Prediction</button>
+          <button id = 'vizButton'>Click to Visualize Prediction</button>
+      </div>
+     <div class = 'fieldSection'></div>
+    </div>
+    
+    <script>
+    
+    
+    // define the dimensions and margins for the football field chart
+    const w = 1125,
+    h = 500,
+    margin = {top: 50, right: 25, bottom: 50, left: 25};
+    
+    // append title to page
+    d3.select('.titleArea')
+      .append('h1')
+      .attr('id', 'pageTitle')
+      .attr('class', 'pageTitle_class')
+      .style('color', '#AA0000')
+      .style('font-size', '50px')
+      .style('text-shadow', '-0.5px -0.5px 0 white, 0.5px -0.5px 0 white')
+      .text('NFL Offensive Play Predictor')
+    
+    // append svg element to the body of the page
+    const svg = d3.select('.fieldSection')
+                .append("svg")
+                .attr("id", "fieldArea")
+                .attr('id', 'fieldArea_class')
+                .attr("width", w + margin.left + margin.right)
+                .attr("height", h + margin.top + margin.bottom)
+    
+    // define global variables             
+    let field 
+    let predictedPlays
+    let teamSelector
+    let losSelector
+  
+  ///////////////////////////////////////////////////////////////////////////
+  
+  
+    // Load team aesthetics data
+    d3.dsv(",", "team_data.csv", function (d) {
+      return {
+        team: d.team,
+        primary_hex: d.primary_hex,
+        secondary_hex: d.secondary_hex,
+        mascot: d.mascot,
+        ez_font: d.ez_font,
+        logo_path: d.logo_path
+      }
+    }).then(function (data) {
+      
+      // Look at the data in the browser's developer tools console
+        //console.log(data) 
+          
+      // Create Team Dropdown
+      const teamValues = data.map(d => d.team).sort()
+        //console.log(teamValues)
+          
+      teamSelector = d3.select('#teamDropdown')
+                      .style('position', 'absolute')
+      teamOptions = teamSelector.selectAll('option')
+                      .data(teamValues)
+                      .enter().append('option')
+                      .attr('value', d => d)
+                      .text(d => d)
+      // Create LOS Dropdown
+      const losValues = []
+      for (let i = 1; i<=49; i++){ losValues.push(i) }
+      losValues.push(50)
+      for (let i = -49; i<=-1; i++){ losValues.push(i) }
+        //console.log(losValues)
+      losSelector = d3.select('#losDropdown')
+                    .style('position', 'absolute')
+      losOptions = losSelector.selectAll('option')
+                    .data(losValues)
+                    .enter().append('option')
+                    .attr('value', d => d)
+                    .text(d => d)
+      losSelector.property('value', '16')
+      
+      // Create and outline the football field.
+      field = svg.append('g')
+                  .attr('id', 'field')
+                  .attr('class', 'field_class')
+                  .attr("transform", "translate(" + margin.left + "," + (margin.top - 0) + ")")
+      const playSurface = field.append('rect')
+                                .attr('id', 'playingSurface')
+                                .attr('class', 'playSurface_class')
+                                .attr('width', w )
+                                .attr('height', h)
+                                .attr('fill', '#008000')
+                                .attr('opacity', .40)
+      const fieldOutline = field.append('g')
+                                .attr('id', 'outline')
+      const upperSL = fieldOutline.append('line')
+                                .attr('id', 'leftSideline')
+                                .attr('class', 'outline_class')
+                                .attr('y1', -12.5)
+                                .attr('x1', 0 - 25)
+                                .attr('y2', -12.5)
+                                .attr('x2', w + 25)
+                                .attr('stroke', 'white')
+                                .attr('stroke-width', '25')
+      const bottomSL = fieldOutline.append('line')
+                                .attr('id', 'rightSideline')
+                                .attr('class', 'outline_class')
+                                .attr('y1', h + 12.5)
+                                .attr('x1', 0 - 25)
+                                .attr('y2', h + 12.5)
+                                .attr('x2', w + 25)
+                                .attr('stroke', 'white')
+                                .attr('stroke-width', '25')
+      const ltBL = fieldOutline.append('line')
+                                  .attr('id', 'plusBackline')
+                                  .attr('class', 'outline_class')
+                                  .attr('y1', 0)
+                                  .attr('x1', - 12.5)
+                                  .attr('y2', h)
+                                  .attr('x2', - 12.5)
+                                  .attr('stroke', 'white')
+                                  .attr('stroke-width', '25')
+      const rtBL = fieldOutline.append('line')
+                                  .attr('id', 'minusBackline')
+                                  .attr('class', 'outline_class')
+                                  .attr('y1', 0)
+                                  .attr('x1', w + 12.5)
+                                  .attr('y2', h)
+                                  .attr('x2', w + 12.5)
+                                  .attr('z', 999)
+                                  .attr('stroke', 'white')
+                                  .attr('stroke-width', '25')
+      
+      // Draw yardlines
+      const fieldLines = field.append('g')
+                              .attr('id', 'fieldLines')
+      const plusGL = fieldLines.append('line')
+                                .attr('id', 'plusGoalline')
+                                .attr('class', 'fieldLines_class')
+                                .attr('y1', 0)
+                                .attr('x1', 30*(w/360))
+                                .attr('y2', h)
+                                .attr('x2', 30*(w/360))
+                                .attr('stroke', 'white')
+                                .attr('stroke-width', '4')
+      const minusGL = fieldLines.append('line')
+                                .attr('id', 'minusGoalline')
+                                .attr('class', 'fieldLines_class')
+                                .attr('y1', 0)
+                                .attr('x1', w - 30*(w/360))
+                                .attr('y2', h)
+                                .attr('x2', w - 30*(w/360))
+                                .attr('stroke', 'white')
+                                .attr('stroke-width', '4')
+      for (let i = 0; i < 19; i++) {
+        var x = 30*(w/360) + (15 * (w/360)) + i * (15 * (w/360))
+        var ydLine = fieldLines.append('line')
+                              .attr('id', 'yardLine')
+                              .attr('class', 'fieldLines_class')
+                              .attr('y1', 0)
+                              .attr('x1', x)
+                              .attr('y2', h)
+                              .attr('x2', x)
+                              .attr('stroke', 'white')
+                              .attr('stroke-width', '2')
+      }
+      
+      // Draw hashmarks
+      const hashes = field.append('g')
+                        .attr('id', 'hashmarks')
+      for (let i = 0; i < 99; i++) {
+        var x = 30*(w/360) + 3*(w/360) + i * 3*(w/360)
+        var upperSLHash = hashes.append('line')
+                            .attr('id', 'hash')
+                            .attr('class', 'hashmark_class')
+                            .attr('y1', (0 + .5)*(w/360))
+                            .attr('x1', x)
+                            .attr('y2', (2 + .5)*(w/360))
+                            .attr('x2', x)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', '2')
+      }
+      for (let i = 0; i < 99; i++) {
+        var x = 30*(w/360) + 3*(w/360) + i * 3*(w/360)
+        var upperMidHash = hashes.append('line')
+                            .attr('id', 'hash')
+                            .attr('class', 'hashmark_class')
+                            .attr('y1', (0 + 70.75)*(w/360))
+                            .attr('x1', x)
+                            .attr('y2', (2 + 70.75)*(w/360))
+                            .attr('x2', x)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', '2')
+      }
+      for (let i = 0; i < 99; i++) {
+        var x = 30*(w/360) + 3*(w/360) + i * 3*(w/360)
+        var lowerMidHash = hashes.append('line')
+                            .attr('id', 'hash')
+                            .attr('class', 'hashmark_class')
+                            .attr('y1', h - (0 + .5)*(w/360))
+                            .attr('x1', x)
+                            .attr('y2', h - (2 + .5)*(w/360))
+                            .attr('x2', x)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', '2')
+      }
+      for (let i = 0; i < 99; i++) {
+        var x = 30*(w/360) + 3*(w/360) + i * 3*(w/360)
+        var lowerSLHash = hashes.append('line')
+                            .attr('id', 'hash')
+                            .attr('class', 'hashmark_class')
+                            .attr('y1', h - (0 + 70.75)*(w/360))
+                            .attr('x1', x)
+                            .attr('y2', h - (2 + 70.75)*(w/360))
+                            .attr('x2', x)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', '2')
+      }
+      
+      // Draw numbers
+      const numbs = field.append('g')
+                        .attr('id', 'numbers')
+      for (let i = 1; i<=5; i++) {
+        var x = 30*(w/360) + i * 30*(w/360) - 4
+        var upperLtNumber = numbs.append('text')
+                                .attr('id', 'yardLineNumber')
+                                .attr('class', 'numbers_class')
+                                .attr('text-anchor', 'middle')
+                                .attr('x', x)
+                                .attr('y', 33*(w/360))
+                                .text(i*10)
+                                .attr('fill', 'white')
+                                .attr('font-size', "'"+6*(w/360)+"'")
+                                .attr('font-family', 'Galada')
+                                .attr('letter-spacing', '9px')
+                                .attr('transform', 'rotate(180 '+x+' '+33*(w/360)+')')
+      }
+      for (let i = 4; i>0; i--) {
+        var x = w/2 + (5-i) * 30*(w/360) - 4
+        var upperRtNumber = numbs.append('text')
+                                .attr('id', 'yardLineNumber')
+                                .attr('class', 'numbers_class')
+                                .attr('text-anchor', 'middle')
+                                .attr('x', x)
+                                .attr('y', 33*(w/360))
+                                .text(i*10)
+                                .attr('fill', 'white')
+                                .attr('font-size', "'"+6*(w/360)+"'")
+                                .attr('font-family', 'Galada')
+                                .attr('letter-spacing', '9px')
+                                .attr('transform', 'rotate(180 '+x+' '+33*(w/360)+')')
+      }
+      for (let i = 1; i<=5; i++) {
+        var x = 30*(w/360) + i * 30*(w/360) + 4
+        var lowerLtNumber = numbs.append('text')
+                              .attr('id', 'yardLineNumber')
+                              .attr('class', 'numbers_class')
+                              .attr('text-anchor', 'middle')
+                              .attr('x', x)
+                              .attr('y', h - 33*(w/360))
+                              .text(i*10)
+                              .attr('fill', 'white')
+                              .attr('font-size', "'"+6*(w/360)+"'")
+                              .attr('font-family', 'Galada')
+                              .attr('letter-spacing', '9px')
+      }
+      for (let i = 4; i>0; i--) {
+        var x = w/2 + (5-i) * 30*(w/360) + 4
+        var lowerRtNumber = numbs.append('text')
+                                .attr('id', 'yardLineNumber')
+                                .attr('class', 'numbers_class')
+                                .attr('text-anchor', 'middle')
+                                .attr('x', x)
+                                .attr('y', h - 33*(w/360))
+                                .text(i*10)
+                                .attr('fill', 'white')
+                                .attr('font-size', "'"+6*(w/360)+"'")
+                                .attr('font-family', 'Galada')
+                                .attr('letter-spacing', '9px')
+      }
+      
+      
+      // Define function to change field logos
+      function changeTeamLogos(selectedTeam){
+        // Define variables
+        var primary_hex = selectedTeam.primary_hex
+        var secondary_hex = selectedTeam.secondary_hex
+        var mascot = selectedTeam.mascot
+        var ez_font = selectedTeam.ez_font
+        var logo_path = selectedTeam.logo_path
+        
+        const teamMarks = field.append('g')
+                              .attr('id', 'teamFieldMarkings')
+        
+        // Draw the midfield logo
+        var teamLogo = new Image()
+        teamLogo.src = logo_path
+        teamLogo.onload = function() {
+          var teamLogoWidth = this.width
+          var teamLogoHeight = this.height
+          var mfLogo = teamMarks.append('image')
+                                .attr('id', 'midfieldLogo')
+                                .attr('class', 'fieldEndZone_class')
+                                .attr('xlink:href', logo_path)
+                                .attr('x', (w - (160/3)*(w/360)) / 2 )
+                                .attr('y', (h - (160/3)*(w/360)) / 2)
+                                .attr('width', (160/3)*(w/360))
+                                .attr('opacity', 0.60)
+        }
+        
+        // Paint end zones
+        const leftEZ = teamMarks.append('rect')
+                              .attr('id', 'plusEndZone')
+                              .attr('class', 'fieldEndZone_class')
+                              .attr('height', h )
+                              .attr('width', 30*(w/360))
+                              .attr('fill', primary_hex)
+                              .attr('opacity', 0.60)
+        const rightEZ = teamMarks.append('rect')
+                                .attr('id', 'minusEndZone')
+                                .attr('class', 'fieldEndZone_class')
+                                .attr('height', h )
+                                .attr('width', 30*(w/360))
+                                .attr('fill', primary_hex)
+                                .attr("transform", "translate(" + (w - 30*(w/360)) + ", 0)")
+                                .attr('opacity', 0.60)
+        
+        // Write team names in endzones
+        const leftEZText = teamMarks.append('text')
+                                  .attr('id', 'plusEndZoneText')
+                                  .attr('class', 'fieldEndZone_class')
+                                  .attr('text-anchor', 'middle')
+                                  .attr('y', h/2 + 55)
+                                  .attr('x', 30*(w/360)/2 + (22 * (w/360))/3 + 15 )
+                                  .text(mascot)
+                                  .attr('stroke', 'white')
+                                  .attr('fill', secondary_hex)
+                                  .attr('font-size', '56.6')
+                                  .attr('font-family', ez_font)
+                                  .attr('transform', 'rotate(-90 ' + (30*(w/360) / 2) + ' ' + ((h/2)+35) + ')')
+                                  .attr('opacity', 0.60)
+        const rightEZText = teamMarks.append('text')
+                                    .attr('id', 'minusEndZoneText')
+                                    .attr('class', 'fieldEndZone_class')
+                                    .attr('text-anchor', 'middle')
+                                    .attr('y', h/2 + 55)
+                                    .attr('x', w - (30*(w/360)/2 + (22 * (w/360))/3 +15) )
+                                    .text(mascot)
+                                    .attr('stroke', 'white')
+                                    .attr('fill', secondary_hex)
+                                    .attr('font-size', '56.6')
+                                    .attr('font-family', ez_font)
+                                    .attr('transform', 'rotate(90 ' + (w-(30*(w/360)/2)) + ' ' + ((h/2)+35) + ')')
+                                    .attr('opacity', 0.60)
+        
+      }
+      
+      // Define function to place the offense
+      function placeOffense(selectedLOS, selectedTeam){
+        // Define variables
+        var primary_hex = selectedTeam.primary_hex
+        var secondary_hex = selectedTeam.secondary_hex
+        
+        // Place the LOS
+        if (selectedLOS < 0) {
+          var x = (margin.left - 50) + (10*3 + (-1*selectedLOS)*3)*(w/360) + (2.6 * 3)*(w/360)
+        } else {
+          var x = (margin.left - 50) + (10*3 + (100 - selectedLOS)*3)*(w/360)+ (2.6 * 3)*(w/360)
+        }
+        
+        // Draw the Passing Zones
+        const zones = field.append('g')
+                            .attr('id', 'passingZones')
+        const leftScreen = zones.append('rect')
+                              .attr('id', 'left_screen')
+                              .attr('class', 'offense_class')
+                              .attr('x', x - 15 * (w/360) )
+                              .attr('y', 0)
+                              .attr('width', 15 * (w/360))
+                              .attr('height', (160/3)*(w/360))
+                              .attr('fill', secondary_hex)
+                              .attr('stroke', primary_hex)
+                              .attr('stroke-width', '2')
+                              .attr('fill-opacity', .01)
+        const leftShort = zones.append('rect')
+                              .attr('id', 'left_short')
+                              .attr('class', 'offense_class')
+                              .attr('x', x)
+                              .attr('y', 0)
+                              .attr('width', 30 * (w/360))
+                              .attr('height', (160/3)*(w/360))
+                              .attr('fill', secondary_hex)
+                              .attr('stroke', primary_hex)
+                              .attr('stroke-width', '2')
+                              .attr('fill-opacity', .01)
+        const leftIntermediate = zones.append('rect')
+                              .attr('id', 'left_intermediate')
+                              .attr('class', 'offense_class')
+                              .attr('x', x + 30 * (w/360))
+                              .attr('y', 0)
+                              .attr('width', 30 * (w/360))
+                              .attr('height', (160/3)*(w/360))
+                              .attr('fill', secondary_hex)
+                              .attr('stroke', primary_hex)
+                              .attr('stroke-width', '2')
+                              .attr('fill-opacity', .01)
+        const leftLong = zones.append('rect')
+                              .attr('id', 'left_long')
+                              .attr('class', 'offense_class')
+                              .attr('x', x + 60 * (w/360))
+                              .attr('y', 0)
+                              .attr('width', 45 * (w/360))
+                              .attr('height', (160/3)*(w/360))
+                              .attr('fill', secondary_hex)
+                              .attr('stroke', primary_hex)
+                              .attr('stroke-width', '2')
+                              .attr('fill-opacity', .01)
+        const leftDeep = zones.append('rect')
+                              .attr('id', 'left_deep')
+                              .attr('class', 'offense_class')
+                              .attr('x', x + 105 * (w/360))
+                              .attr('y', 0)
+                              .attr('width', 45 * (w/360))
+                              .attr('height', (160/3)*(w/360))
+                              .attr('fill', secondary_hex)
+                              .attr('stroke', primary_hex)
+                              .attr('stroke-width', '2')
+                              .attr('fill-opacity', .01)
+        const midScreen = zones.append('rect')
+                              .attr('id', 'middle_screen')
+                              .attr('class', 'offense_class')
+                              .attr('x', x - 15 * (w/360) )
+                              .attr('y', (160/3)*(w/360))
+                              .attr('width', 15 * (w/360))
+                              .attr('height', (160/3)*(w/360))
+                              .attr('fill', secondary_hex)
+                              .attr('stroke', primary_hex)
+                              .attr('stroke-width', '2')
+                              .attr('fill-opacity', .01)
+        const midShort = zones.append('rect')
+                              .attr('id', 'middle_short')
+                              .attr('class', 'offense_class')
+                              .attr('x', x)
+                              .attr('y', (160/3)*(w/360))
+                              .attr('width', 30 * (w/360))
+                              .attr('height', (160/3)*(w/360))
+                              .attr('fill', secondary_hex)
+                              .attr('stroke', primary_hex)
+                              .attr('stroke-width', '2')
+                              .attr('fill-opacity', .01)
+        const midIntermediate = zones.append('rect')
+                              .attr('id', 'middle_intermediate')
+                              .attr('class', 'offense_class')
+                              .attr('x', x + 30 * (w/360))
+                              .attr('y', (160/3)*(w/360))
+                              .attr('width', 30 * (w/360))
+                              .attr('height', (160/3)*(w/360))
+                              .attr('fill', secondary_hex)
+                              .attr('stroke', primary_hex)
+                              .attr('stroke-width', '2')
+                              .attr('fill-opacity', .01)
+        const midLong = zones.append('rect')
+                              .attr('id', 'middle_long')
+                              .attr('class', 'offense_class')
+                              .attr('x', x + 60 * (w/360))
+                              .attr('y', (160/3)*(w/360))
+                              .attr('width', 45 * (w/360))
+                              .attr('height', (160/3)*(w/360))
+                              .attr('fill', secondary_hex)
+                              .attr('stroke', primary_hex)
+                              .attr('stroke-width', '2')
+                              .attr('fill-opacity', .01)
+        const midDeep = zones.append('rect')
+                              .attr('id', 'middle_deep')
+                              .attr('class', 'offense_class')
+                              .attr('x', x + 105 * (w/360))
+                              .attr('y', (160/3)*(w/360))
+                              .attr('width', 45 * (w/360))
+                              .attr('height', (160/3)*(w/360))
+                              .attr('fill', secondary_hex)
+                              .attr('stroke', primary_hex)
+                              .attr('stroke-width', '2')
+                              .attr('fill-opacity', .01)
+        const rightScreen = zones.append('rect')
+                              .attr('id', 'right_screen')
+                              .attr('class', 'offense_class')
+                              .attr('x', x - 15 * (w/360) )
+                              .attr('y', h - (160/3)*(w/360))
+                              .attr('width', 15 * (w/360))
+                              .attr('height', (160/3)*(w/360))
+                              .attr('fill', secondary_hex)
+                              .attr('stroke', primary_hex)
+                              .attr('stroke-width', '2')
+                              .attr('fill-opacity', .01)
+        const rightShort = zones.append('rect')
+                              .attr('id', 'right_short')
+                              .attr('class', 'offense_class')
+                              .attr('x', x)
+                              .attr('y', h - (160/3)*(w/360))
+                              .attr('width', 30 * (w/360))
+                              .attr('height', (160/3)*(w/360))
+                              .attr('fill', secondary_hex)
+                              .attr('stroke', primary_hex)
+                              .attr('stroke-width', '2')
+                              .attr('fill-opacity', .01)
+        const rightIntermediate = zones.append('rect')
+                              .attr('id', 'right_intermediate')
+                              .attr('class', 'offense_class')
+                              .attr('x', x + 30 * (w/360))
+                              .attr('y', h - (160/3)*(w/360))
+                              .attr('width', 30 * (w/360))
+                              .attr('height', (160/3)*(w/360))
+                              .attr('fill', secondary_hex)
+                              .attr('stroke', primary_hex)
+                              .attr('stroke-width', '2')
+                              .attr('fill-opacity', .01)
+        const rightLong = zones.append('rect')
+                              .attr('id', 'right_long')
+                              .attr('class', 'offense_class')
+                              .attr('x', x + 60 * (w/360))
+                              .attr('y', h - (160/3)*(w/360))
+                              .attr('width', 45 * (w/360))
+                              .attr('height', (160/3)*(w/360))
+                              .attr('fill', secondary_hex)
+                              .attr('stroke', primary_hex)
+                              .attr('stroke-width', '2')
+                              .attr('fill-opacity', .01)
+        const rightDeep = zones.append('rect')
+                              .attr('id', 'right_deep')
+                              .attr('class', 'offense_class')
+                              .attr('x', x + 105 * (w/360))
+                              .attr('y', h - (160/3)*(w/360))
+                              .attr('width', 45 * (w/360))
+                              .attr('height', (160/3)*(w/360))
+                              .attr('fill', secondary_hex)
+                              .attr('stroke', primary_hex)
+                              .attr('stroke-width', '2')
+                              .attr('fill-opacity', .01)
+                              
+        // Draw the LOS
+        los = field.append('line')
+                  .attr('id', 'lineOfScrimmage')
+                  .attr('class', 'los_class')
+                  .attr('x1', x )
+                  .attr('y1', 0 )
+                  .attr('x2', x )
+                  .attr('y2', h )
+                  .attr('stroke', 'yellow')
+                  .attr('stroke-width', '4')
+                  
+        // Draw the Offensive Players
+        const offense = field.append('g')
+                            .attr('id', 'offensivePlayers')
+        const center = offense.append('circle')
+                              .attr('id', 'middle_center')
+                              .attr('class', 'offense_class')
+                              .attr('cx', x-4)
+                              .attr('cy', h/2)
+                              .attr('r', 5)
+                              .attr('fill', secondary_hex)
+                              .attr('stroke', primary_hex)
+                              .attr('stroke-width', '3')
+                              .attr('fill-opacity', .01)
+        const leftGuard = offense.append('circle')
+                              .attr('id', 'left_guard')
+                              .attr('class', 'offense_class')
+                              .attr('cx', x-10)
+                              .attr('cy', h/2 - 6*(w/360))
+                              .attr('r', 5)
+                              .attr('fill', secondary_hex)
+                              .attr('stroke', primary_hex)
+                              .attr('stroke-width', '3')
+                              .attr('fill-opacity', .01)
+        const rightGuard = offense.append('circle')
+                              .attr('id', 'right_guard')
+                              .attr('class', 'offense_class')
+                              .attr('cx', x-10)
+                              .attr('cy', h/2 + 6*(w/360))
+                              .attr('r', 5)
+                              .attr('fill', secondary_hex)
+                              .attr('stroke', primary_hex)
+                              .attr('stroke-width', '3')
+                              .attr('fill-opacity', .01)
+        const leftTackle = offense.append('circle')
+                              .attr('id', 'left_tackle')
+                              .attr('class', 'offense_class')
+                              .attr('cx', x-10)
+                              .attr('cy', h/2 - 12*(w/360))
+                              .attr('r', 5)
+                              .attr('fill', secondary_hex)
+                              .attr('stroke', primary_hex)
+                              .attr('stroke-width', '3')
+                              .attr('fill-opacity', .01)
+        const rightTackle = offense.append('circle')
+                              .attr('id', 'right_tackle')
+                              .attr('class', 'offense_class')
+                              .attr('cx', x-10)
+                              .attr('cy', h/2 + 12*(w/360))
+                              .attr('r', 5)
+                              .attr('fill', secondary_hex)
+                              .attr('stroke', primary_hex)
+                              .attr('stroke-width', '3')
+                              .attr('fill-opacity', .01)
+        const leftEnd = offense.append('circle')
+                              .attr('id', 'left_end')
+                              .attr('class', 'offense_class')
+                              .attr('cx', x-10)
+                              .attr('cy', h/2 - 24*(w/360))
+                              .attr('r', 5)
+                              .attr('fill', secondary_hex)
+                              .attr('stroke', primary_hex)
+                              .attr('stroke-width', '3')
+                              .attr('fill-opacity', .01)
+        const rightEnd = offense.append('circle')
+                              .attr('id', 'right_end')
+                              .attr('class', 'offense_class')
+                              .attr('cx', x-10)
+                              .attr('cy', h/2 + 24*(w/360))
+                              .attr('r', 5)
+                              .attr('fill', secondary_hex)
+                              .attr('stroke', primary_hex)
+                              .attr('stroke-width', '3')
+                              .attr('fill-opacity', .01)
+        const kicker = offense.append('circle')
+                              .attr('id', 'kicker')
+                              .attr('class', 'offense_class')
+                              .attr('cx', x - 21*(w/360))
+                              .attr('cy', h/2 - 6*(w/360))
+                              .attr('r', 5)
+                              .attr('fill', secondary_hex)
+                              .attr('stroke', primary_hex)
+                              .attr('stroke-width', '3')
+                              .attr('fill-opacity', .01)
+        const punter = offense.append('circle')
+                              .attr('id', 'punter')
+                              .attr('class', 'offense_class')
+                              .attr('cx', x - 30*(w/360))
+                              .attr('cy', h/2)
+                              .attr('r', 5)
+                              .attr('fill', secondary_hex)
+                              .attr('stroke', primary_hex)
+                              .attr('stroke-width', '3')
+                              .attr('fill-opacity', .01)                     
+      }
+      
+      // Create offense based on Selected LOS and Selected Team
+      d3.select('#vizButton').on('click', function() {
+        const selectedLOS = parseInt(d3.select('#losDropdown').node().value)
+        const selectedTeamName = d3.select('#teamDropdown').node().value
+        const selectedTeam = data.find(d => d.team === selectedTeamName)
+        
+        // Place Team Logo and End Zones
+        if ( selectedTeam ) {
+          d3.select('#teamFieldMarkings').remove()
+          changeTeamLogos(selectedTeam)
+        }
+        
+        // Place Offense with adjusted radii and opacity
+        if ( !isNaN(selectedLOS) && selectedTeam ){
+          d3.select('#lineOfScrimmage').remove()
+          d3.select('#offensivePlayers').remove()
+          d3.select('#passingZones').remove()
+          placeOffense(selectedLOS, selectedTeam)
+        }
+        
+        // Extract prediction probabilities and update the visualization
+        console.log(predictedPlays)
+        predictedPlays.forEach(d => {
+          
+          new_opacity = d.prob ** 0.5
+          
+          if (d.prob >= 0.20){
+            new_radius = 5 * (d.prob * 5)
+          } else {
+            new_radius = 5
+          }
+          
+          if (d.play_type === 'pass') {
+            playZone = d.side_of_field+'_'+d.pass_depth
+              console.log('playZone: ' + playZone)
+              console.log('new opacity: ' + new_opacity)
+            d3.select('#'+playZone).attr('fill-opacity', new_opacity)
+          } else if (d.play_type === 'run'){
+            playGap = d.side_of_field+'_'+d.run_gap
+              console.log('playGap: ' + playGap)
+              console.log('new opacity: ' + new_opacity)
+              console.log('new radius: ' + new_radius)
+            d3.select('#'+playGap).attr('r', new_radius)
+                                  .attr('fill-opacity', new_opacity)
+          } else if (d.play_type === 'kick'){
+            d3.select('#kicker').attr('r', new_radius)
+                                .attr('fill-opacity', new_opacity)
+          } else {
+            d3.select('#punter').attr('r', new_radius)
+                                .attr('fill-opacity', new_opacity)
+          }
+        })
+      })
+      
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+    
+  
+  ////////////////////////////////////////////////////////////////////////////
+    
+    
+    d3.dsv(",", "trial_predictions.csv", function (d) {
+      return {
+        year: d.year,
+        team: d.team,
+        home_away: d.home_away,
+        quarter: d.quarter,
+        game_clock: d.game_clock,
+        off_remaining_to: d.off_remaining_to,
+        def_remaining_to: d.def_remaining_to,
+        off_point_diff: d.off_point_diff, 
+        los: d.los,
+        down: d.down, 
+        distance: d.distance,
+        play_type: d.play_type,
+        side_of_field: d.side_of_field, 
+        run_gap: d.run_gap, 
+        pass_depth: d.pass_depth, 
+        prob: +d.prob
+      }
+    }).then(function (data2) {
+      
+      // Look at the data in the browser's developer tools console
+        console.log(data2) 
+      
+      // Create  Dropdown Menus
+      //// Home Away Dropdown
+      const offHomeAwayValues = [
+                                 'Home',
+                                 'Away'
+                                ]
+        //console.log(offHomeAwayValues)
+      const offHomeAwaySelector = d3.select('#offHomeAwayDropdown')
+                                    .style('position', 'absolute')
+      const offHomeAwayOptions = offHomeAwaySelector.selectAll('option')
+                                                    .data(offHomeAwayValues)
+                                                    .enter().append('option')
+                                                    .attr('value', d => d)
+                                                    .text(d => d)
+      
+      //// Quarter Dropdown
+      const quarterValues = [
+                              '1st',
+                              '2nd',
+                              '3rd',
+                              '4th',
+                              'OT'
+                            ]
+        //console.log(quarterValues)
+      const quarterSelector = d3.select('#quarterDropdown')
+                                .style('position', 'absolute')
+      const quarterOptions = quarterSelector.selectAll('option')
+                                            .data(quarterValues)
+                                            .enter().append('option')
+                                            .attr('value', d => d)
+                                            .text(d => d)
+      
+      //// Game Clock Dropdown
+      const gameClockValues = [
+                                '15:00-10:00',
+                                '9:59-8:00',
+                                '7:59-6:00',
+                                '5:59-4:00',
+                                '3:59-2:00',
+                                '1:59-0:00'
+                              ]
+        //console.log(gameClockValues)
+      const gameClockSelector = d3.select('#gameClockDropdown')
+                                  .style('position', 'absolute')
+      const gameClockOptions = gameClockSelector.selectAll('option')
+                                                .data(gameClockValues)
+                                                .enter().append('option')
+                                                .attr('value', d => d)
+                                                .text(d => d)
+      
+      //// Remaining Offensive Timeouts Dropdown
+      const remainingOffTOsValues = [
+                                      '3',
+                                      '2',
+                                      '1',
+                                      '0'
+                                    ]
+        //console.log(remainingOffTOsValues)
+      const remainingOffTOsSelector = d3.select('#remainingOffTOsDropdown')
+                                        .style('position', 'absolute')
+      const remainingOffTOsOptions = remainingOffTOsSelector.selectAll('option')
+                                                            .data(remainingOffTOsValues)
+                                                            .enter().append('option')
+                                                            .attr('value', d => d)
+                                                            .text(d => d)
+      
+      //// Remaining Defensive Timeouts Dropdown
+      const remainingDefTOsValues = [
+                                      '3',
+                                      '2',
+                                      '1',
+                                      '0'
+                                    ]
+        //console.log(remainingDefTOsValues)
+      const remainingDefTOsSelector = d3.select('#remainingDefTOsDropdown')
+                                        .style('position', 'absolute')
+      const remainingDefTOsOptions = remainingDefTOsSelector.selectAll('option')
+                                                            .data(remainingDefTOsValues)
+                                                            .enter().append('option')
+                                                            .attr('value', d => d)
+                                                            .text(d => d)
+      
+      //// Offensive Point Differential Dropdown
+      const offPointDiffValues = [
+                                  'up 12-14+',
+                                  'up 9-11',
+                                  'up 4-8',
+                                  'up 1-3',
+                                  '0',
+                                  'down 1-3',
+                                  'down 4-8',
+                                  'down 9-11',
+                                  'down 12-14+'
+                                ]
+        //console.log(offPointDiffValues)
+      const offPointDiffSelector = d3.select('#offPointDiffDropdown')
+                                    .style('position', 'absolute')
+      const offPointDiffOptions = offPointDiffSelector.selectAll('option')
+                                                      .data(offPointDiffValues)
+                                                      .enter().append('option')
+                                                      .attr('value', d => d)
+                                                      .text(d => d)
+      
+      //// Down Dropdown
+      const downValues = [
+                          '1',
+                          '2',
+                          '3',
+                          '4'
+                        ]
+        //console.log(downValues)
+      const downSelector = d3.select('#downDropdown')
+                            .style('position', 'absolute')
+      const downOptions = downSelector.selectAll('option')
+                                      .data(downValues)
+                                      .enter().append('option')
+                                      .attr('value', d => d)
+                                      .text(d => d)
+      
+      //// Distance Dropdown
+      const distanceValues = [
+                              '16+',
+                              '11-15',
+                              '7-10',
+                              '3-6',
+                              '1-2',
+                              '<1'
+                            ]
+        //console.log(distanceValues)
+      const distanceSelector = d3.select('#distanceDropdown')
+                                .style('position', 'absolute')
+      const distanceOptions = distanceSelector.selectAll('option')
+                                              .data(distanceValues)
+                                              .enter().append('option')
+                                              .attr('value', d => d)
+                                              .text(d => d)
+      
+      // Filter Data2 based on selected Values
+      function filterData() {
+        // Define selected Values
+        const selectedTeam = d3.select('#teamDropdown').node().value
+        const selectedQuarter = d3.select('#quarterDropdown').node().value
+        const selectedDown = d3.select('#downDropdown').node().value
+        const selectedDistance = d3.select('#distanceDropdown').node().value
+        const selectedLOS = parseInt(d3.select('#losDropdown').node().value)
+        const selectedHomeAway = d3.select('#offHomeAwayDropdown').node().value
+        const selectedPointDiff = d3.select('#offPointDiffDropdown').node().value
+        const selectedClock = d3.select('#gameClockDropdown').node().value
+        const selectedOffTOs = d3.select('#remainingOffTOsDropdown').node().value
+        const selectedDefTOs = d3.select('#remainingDefTOsDropdown').node().value
+        
+        // Convert selected LOS to a selected LOS Range
+        let selectedLOSRange = ''
+        if ( selectedLOS <= -1 && selectedLOS >= -5 ){
+          selectedLOSRange = '-GL to -5'
+        } else if ( selectedLOS <= -6 && selectedLOS >= -14 ){
+          selectedLOSRange = '-6 to -14'
+        } else if ( selectedLOS <= -15 && selectedLOS >= -39 ){
+          selectedLOSRange = '-15 to -39'
+        } else if ( (selectedLOS <= -40 && selectedLOS >= -49) || 
+                    (selectedLOS <= 50 && selectedLOS >= 36)  ){
+          selectedLOSRange = '-40 to +36'
+        } else if ( selectedLOS <= 35 && selectedLOS >= 21 ){
+          selectedLOSRange = '+35 to +21'
+        } else if ( selectedLOS <= 20 && selectedLOS >= 11 ){
+          selectedLOSRange = '+20 to +11'
+        } else if ( selectedLOS <= 10 && selectedLOS >= 6 ){
+          selectedLOSRange = '+10 to +6'
+        } else {
+          selectedLOSRange = '+5 to +GL'
+        }
+        
+        filteredData2 = data2.filter(d => 
+                 d.team === selectedTeam && 
+                 d.quarter === selectedQuarter &&
+                 d.down === selectedDown &&
+                 d.distance === selectedDistance &&
+                 d.los === selectedLOSRange &&
+                 d.home_away === selectedHomeAway &&
+                 d.off_point_diff === selectedPointDiff &&
+                 d.game_clock === selectedClock &&
+                 d.off_remaining_to === selectedOffTOs &&
+                 d.def_remaining_to === selectedDefTOs
+        )
+        
+        predictedPlays = filteredData2.map(d => ({
+          play_type: d.play_type,
+          side_of_field: d.side_of_field,
+          run_gap: d.run_gap,
+          pass_depth: d.pass_depth,
+          prob: d.prob
+        }))
+      }
+      
+      // Filter the data on the button click.
+      d3.select('#filterButton').on('click', function() {
+        filterData()
+        
+        // Remove old visulization
+        d3.select('#teamFieldMarkings').remove()
+        d3.select('#lineOfScrimmage').remove()
+        d3.select('#offensivePlayers').remove()
+        d3.select('#passingZones').remove()
+      })
+      
+      
+      
+      // Set Dropdown Defaults
+      teamSelector.property('value', 'CHI')
+      losSelector.property('value', '33')
+      offHomeAwaySelector.property('value', 'Home')
+      quarterSelector.property('value', 'OT')
+      gameClockSelector.property('value', '9:59-8:00')
+      remainingOffTOsSelector.property('value', '1')
+      remainingDefTOsSelector.property('value', '1')
+      offPointDiffSelector.property('value', '0')
+      downSelector.property('value', '2')
+      distanceSelector.property('value', '7-10')
+      
+      
+    })
+  .catch(function (error) {
+    console.log(error);
+  });
+  
+  
+  </script>
+    
+    </body>
+    
