@@ -1,0 +1,145 @@
+year,team,home_away,quarter,game_clock,off_remaining_to,def_remaining_to,off_point_diff,los,down,distance,play_type,side_of_field,run_gap,pass_depth,prob
+2022,SF,Home,1st,15:00-10:00,3,3,0,-GL to -5,3,16+,run,left,tackle,,0.386341409
+2022,SF,Home,1st,15:00-10:00,3,3,0,-GL to -5,3,16+,run,middle,center,,0.170519158
+2022,SF,Home,1st,15:00-10:00,3,3,0,-GL to -5,3,16+,pass,right,,screen,0.459678738
+2022,SF,Home,1st,15:00-10:00,3,3,0,-GL to -5,3,16+,pass,left,,intermediate,0.003889258
+2022,SF,Home,2nd,9:59-8:00,2,1,up 4-8,+20 to +11,2,7-10,run,middle,center,,0.533838165
+2022,SF,Home,2nd,9:59-8:00,2,1,up 4-8,+20 to +11,2,7-10,run,right,guard,,0.011674223
+2022,SF,Home,2nd,9:59-8:00,2,1,up 4-8,+20 to +11,2,7-10,pass,left,,long,0.493920502
+2022,SF,Home,2nd,9:59-8:00,2,1,up 4-8,+20 to +11,2,7-10,pass,middle,,short,0.063443335
+2022,SF,Home,3rd,7:59-6:00,3,2,up 1-3,-40 to +36,1,3-6,run,right,end,,0.116195869
+2022,SF,Home,3rd,7:59-6:00,3,2,up 1-3,-40 to +36,1,3-6,pass,left,,short,0.011555313
+2022,SF,Home,3rd,7:59-6:00,3,2,up 1-3,-40 to +36,1,3-6,pass,middle,,intermediate,0.87171
+2022,SF,Home,3rd,7:59-6:00,3,2,up 1-3,-40 to +36,1,3-6,pass,right,,screen,0.019926221
+2022,SF,Home,4th,5:59-4:00,1,0,up 12-14+,-6 to -14,3,1-2,run,left,tackle,,0.429027971
+2022,SF,Home,4th,5:59-4:00,1,0,up 12-14+,-6 to -14,3,1-2,run,middle,center,,0.102015994
+2022,SF,Home,4th,5:59-4:00,1,0,up 12-14+,-6 to -14,3,1-2,run,right,guard,,0.159296779
+2022,SF,Home,4th,5:59-4:00,1,0,up 12-14+,-6 to -14,3,1-2,pass,middle,,intermediate,0.361459518
+2022,SF,Home,OT,9:59-8:00,1,1,0,+35 to +21,2,7-10,run,middle,center,,0.412584051
+2022,SF,Home,OT,9:59-8:00,1,1,0,+35 to +21,2,7-10,run,right,end,,0.029529586
+2022,SF,Home,OT,9:59-8:00,1,1,0,+35 to +21,2,7-10,kick,,,,0.481908997
+2022,SF,Home,OT,9:59-8:00,1,1,0,+35 to +21,2,7-10,pass,middle,,intermediate,0.148650981
+2022,SF,Away,1st,3:59-2:00,2,3,down 1-3,+20 to +11,4,11-15,pass,right,,long,0.081292262
+2022,SF,Away,1st,3:59-2:00,2,3,down 1-3,+20 to +11,4,11-15,pass,middle,,intermediate,0.094678356
+2022,SF,Away,1st,3:59-2:00,2,3,down 1-3,+20 to +11,4,11-15,kick,,,,0.826307395
+2022,SF,Away,1st,3:59-2:00,2,3,down 1-3,+20 to +11,4,11-15,run,right,tackle,,0.022420986
+2022,SF,Away,2nd,1:59-0:00,1,2,down 9-11,-15 to -39,1,7-10,run,left,guard,,0.570045395
+2022,SF,Away,2nd,1:59-0:00,1,2,down 9-11,-15 to -39,1,7-10,run,middle,center,,0.111589473
+2022,SF,Away,2nd,1:59-0:00,1,2,down 9-11,-15 to -39,1,7-10,pass,right,,screen,0.322355227
+2022,SF,Away,2nd,1:59-0:00,1,2,down 9-11,-15 to -39,1,7-10,pass,left,,intermediate,0.072822494
+2022,SF,Away,3rd,15:00-10:00,3,3,down 12-14+,-40 to +36,4,1-2,pass,middle,,intermediate,0.139927789
+2022,SF,Away,3rd,15:00-10:00,3,3,down 12-14+,-40 to +36,4,1-2,run,right,end,,0.047387912
+2022,SF,Away,3rd,15:00-10:00,3,3,down 12-14+,-40 to +36,4,1-2,punt,,,,0.754516276
+2022,SF,Away,3rd,15:00-10:00,3,3,down 12-14+,-40 to +36,4,1-2,pass,left,,long,0.070357611
+2022,SF,Away,4th,9:59-8:00,0,1,down 4-8,+5 to +GL,4,3-6,pass,right,,screen,0.302007225
+2022,SF,Away,4th,9:59-8:00,0,1,down 4-8,+5 to +GL,4,3-6,run,left,tackle,,0.297573307
+2022,SF,Away,4th,9:59-8:00,0,1,down 4-8,+5 to +GL,4,3-6,pass,middle,,short,0.330730974
+2022,SF,Away,4th,9:59-8:00,0,1,down 4-8,+5 to +GL,4,3-6,run,right,guard,,0.030898837
+2022,KC,Home,1st,15:00-10:00,3,3,0,-GL to -5,3,16+,pass,left,,deep,0.167711392
+2022,KC,Home,1st,15:00-10:00,3,3,0,-GL to -5,3,16+,pass,middle,,long,0.053543659
+2022,KC,Home,1st,15:00-10:00,3,3,0,-GL to -5,3,16+,pass,right,,screen,0.671157091
+2022,KC,Home,1st,15:00-10:00,3,3,0,-GL to -5,3,16+,run,left,end,,0.123282249
+2022,KC,Home,2nd,9:59-8:00,2,1,up 4-8,+20 to +11,2,7-10,pass,middle,,short,0.77839464
+2022,KC,Home,2nd,9:59-8:00,2,1,up 4-8,+20 to +11,2,7-10,run,right,tackle,,0.127513294
+2022,KC,Home,2nd,9:59-8:00,2,1,up 4-8,+20 to +11,2,7-10,pass,left,,screen,0.201854409
+2022,KC,Home,2nd,9:59-8:00,2,1,up 4-8,+20 to +11,2,7-10,pass,middle,,intermediate,0.005412153
+2022,KC,Home,3rd,7:59-6:00,3,2,up 1-3,-40 to +36,1,3-6,pass,right,,long,0.022139934
+2022,KC,Home,3rd,7:59-6:00,3,2,up 1-3,-40 to +36,1,3-6,run,left,guard,,0.111131901
+2022,KC,Home,3rd,7:59-6:00,3,2,up 1-3,-40 to +36,1,3-6,pass,middle,,deep,0.793205665
+2022,KC,Home,3rd,7:59-6:00,3,2,up 1-3,-40 to +36,1,3-6,pass,right,,short,0.04090652
+2022,KC,Home,4th,5:59-4:00,1,0,up 12-14+,-6 to -14,3,1-2,pass,left,,screen,0.402268077
+2022,KC,Home,4th,5:59-4:00,1,0,up 12-14+,-6 to -14,3,1-2,run,middle,center,,0.030112781
+2022,KC,Home,4th,5:59-4:00,1,0,up 12-14+,-6 to -14,3,1-2,pass,right,,screen,0.62103923
+2022,KC,Home,4th,5:59-4:00,1,0,up 12-14+,-6 to -14,3,1-2,pass,left,,intermediate,0.016995934
+2022,KC,Home,OT,9:59-8:00,1,1,0,+35 to +21,2,7-10,pass,right,,long,0.694910031
+2022,KC,Home,OT,9:59-8:00,1,1,0,+35 to +21,2,7-10,run,right,end,,0.025971803
+2022,KC,Home,OT,9:59-8:00,1,1,0,+35 to +21,2,7-10,kick,,,,0.391903976
+2022,KC,Home,OT,9:59-8:00,1,1,0,+35 to +21,2,7-10,pass,middle,,deep,0.017538929
+2022,KC,Away,1st,3:59-2:00,2,3,down 1-3,+20 to +11,4,11-15,pass,right,,intermediate,0.083924038
+2022,KC,Away,1st,3:59-2:00,2,3,down 1-3,+20 to +11,4,11-15,pass,left,,screen,0.098441759
+2022,KC,Away,1st,3:59-2:00,2,3,down 1-3,+20 to +11,4,11-15,kick,,,,0.82847328
+2022,KC,Away,1st,3:59-2:00,2,3,down 1-3,+20 to +11,4,11-15,pass,right,,long,0.006465145
+2022,KC,Away,2nd,1:59-0:00,1,2,down 9-11,-15 to -39,1,7-10,pass,left,,screen,0.848840295
+2022,KC,Away,2nd,1:59-0:00,1,2,down 9-11,-15 to -39,1,7-10,run,middle,center,,0.160012488
+2022,KC,Away,2nd,1:59-0:00,1,2,down 9-11,-15 to -39,1,7-10,pass,right,,short,0.017683419
+2022,KC,Away,2nd,1:59-0:00,1,2,down 9-11,-15 to -39,1,7-10,pass,left,,intermediate,0.089894361
+2022,KC,Away,3rd,15:00-10:00,3,3,down 12-14+,-40 to +36,4,1-2,pass,middle,,deep,0.168761749
+2022,KC,Away,3rd,15:00-10:00,3,3,down 12-14+,-40 to +36,4,1-2,run,right,tackle,,0.007200341
+2022,KC,Away,3rd,15:00-10:00,3,3,down 12-14+,-40 to +36,4,1-2,punt,,,,0.840323653
+2022,KC,Away,3rd,15:00-10:00,3,3,down 12-14+,-40 to +36,4,1-2,pass,middle,,screen,0.015066493
+2022,KC,Away,4th,9:59-8:00,0,1,down 4-8,+5 to +GL,4,3-6,pass,right,,screen,0.232772328
+2022,KC,Away,4th,9:59-8:00,0,1,down 4-8,+5 to +GL,4,3-6,pass,left,,screen,0.150689631
+2022,KC,Away,4th,9:59-8:00,0,1,down 4-8,+5 to +GL,4,3-6,kick,,,,0.554768614
+2022,KC,Away,4th,9:59-8:00,0,1,down 4-8,+5 to +GL,4,3-6,pass,right,,short,0.058094016
+2022,CHI,Home,1st,15:00-10:00,3,3,0,-GL to -5,3,16+,pass,left,,deep,0.122178256
+2022,CHI,Home,1st,15:00-10:00,3,3,0,-GL to -5,3,16+,run,middle,center,,0.282704623
+2022,CHI,Home,1st,15:00-10:00,3,3,0,-GL to -5,3,16+,run,right,guard,,0.424547991
+2022,CHI,Home,1st,15:00-10:00,3,3,0,-GL to -5,3,16+,pass,left,,screen,0.100769906
+2022,CHI,Home,2nd,9:59-8:00,2,1,up 4-8,+20 to +11,2,7-10,run,middle,center,,0.136167712
+2022,CHI,Home,2nd,9:59-8:00,2,1,up 4-8,+20 to +11,2,7-10,run,right,end,,0.0867745
+2022,CHI,Home,2nd,9:59-8:00,2,1,up 4-8,+20 to +11,2,7-10,pass,left,,screen,0.610089869
+2022,CHI,Home,2nd,9:59-8:00,2,1,up 4-8,+20 to +11,2,7-10,pass,middle,,long,0.165276629
+2022,CHI,Home,3rd,7:59-6:00,3,2,up 1-3,-40 to +36,1,3-6,run,right,tackle,,0.15915152
+2022,CHI,Home,3rd,7:59-6:00,3,2,up 1-3,-40 to +36,1,3-6,run,left,end,,0.207872739
+2022,CHI,Home,3rd,7:59-6:00,3,2,up 1-3,-40 to +36,1,3-6,pass,middle,,intermediate,0.559328895
+2022,CHI,Home,3rd,7:59-6:00,3,2,up 1-3,-40 to +36,1,3-6,pass,right,,deep,0.036186237
+2022,CHI,Home,4th,5:59-4:00,1,0,up 12-14+,-6 to -14,3,1-2,run,left,guard,,0.122583853
+2022,CHI,Home,4th,5:59-4:00,1,0,up 12-14+,-6 to -14,3,1-2,run,middle,center,,0.256121686
+2022,CHI,Home,4th,5:59-4:00,1,0,up 12-14+,-6 to -14,3,1-2,pass,right,,short,0.462593902
+2022,CHI,Home,4th,5:59-4:00,1,0,up 12-14+,-6 to -14,3,1-2,pass,left,,intermediate,0.097843435
+2022,CHI,Home,OT,9:59-8:00,1,1,0,+35 to +21,2,7-10,kick,,,,0.502304766
+2022,CHI,Home,OT,9:59-8:00,1,1,0,+35 to +21,2,7-10,run,right,tackle,,0.123915193
+2022,CHI,Home,OT,9:59-8:00,1,1,0,+35 to +21,2,7-10,run,left,guard,,0.327129703
+2022,CHI,Home,OT,9:59-8:00,1,1,0,+35 to +21,2,7-10,run,middle,center,,0.105806227
+2022,CHI,Away,1st,3:59-2:00,2,3,down 1-3,+20 to +11,4,11-15,pass,right,,intermediate,0.055233534
+2022,CHI,Away,1st,3:59-2:00,2,3,down 1-3,+20 to +11,4,11-15,pass,left,,long,0.039772087
+2022,CHI,Away,1st,3:59-2:00,2,3,down 1-3,+20 to +11,4,11-15,kick,,,,0.868292982
+2022,CHI,Away,1st,3:59-2:00,2,3,down 1-3,+20 to +11,4,11-15,pass,right,,long,0.034490741
+2022,CHI,Away,2nd,1:59-0:00,1,2,down 9-11,-15 to -39,1,7-10,run,left,end,,0.074952439
+2022,CHI,Away,2nd,1:59-0:00,1,2,down 9-11,-15 to -39,1,7-10,run,middle,center,,0.271974357
+2022,CHI,Away,2nd,1:59-0:00,1,2,down 9-11,-15 to -39,1,7-10,pass,right,,screen,0.502777221
+2022,CHI,Away,2nd,1:59-0:00,1,2,down 9-11,-15 to -39,1,7-10,pass,left,,short,0.074628351
+2022,CHI,Away,3rd,15:00-10:00,3,3,down 12-14+,-40 to +36,4,1-2,run,middle,center,,0.129255419
+2022,CHI,Away,3rd,15:00-10:00,3,3,down 12-14+,-40 to +36,4,1-2,punt,,,,0.605900715
+2022,CHI,Away,3rd,15:00-10:00,3,3,down 12-14+,-40 to +36,4,1-2,pass,left,,screen,0.076963821
+2022,CHI,Away,3rd,15:00-10:00,3,3,down 12-14+,-40 to +36,4,1-2,pass,middle,,deep,0.141764224
+2022,CHI,Away,4th,9:59-8:00,0,1,down 4-8,+5 to +GL,4,3-6,kick,,,,0.39536099
+2022,CHI,Away,4th,9:59-8:00,0,1,down 4-8,+5 to +GL,4,3-6,run,left,tackle,,0.319718008
+2022,CHI,Away,4th,9:59-8:00,0,1,down 4-8,+5 to +GL,4,3-6,pass,middle,,short,0.083243979
+2022,CHI,Away,4th,9:59-8:00,0,1,down 4-8,+5 to +GL,4,3-6,pass,right,,short,0.114176552
+2022,PIT,Home,1st,15:00-10:00,3,3,0,-GL to -5,3,16+,run,left,guard,,0.752844678
+2022,PIT,Home,1st,15:00-10:00,3,3,0,-GL to -5,3,16+,run,middle,center,,0.083531298
+2022,PIT,Home,1st,15:00-10:00,3,3,0,-GL to -5,3,16+,pass,right,,short,0.144643671
+2022,PIT,Home,1st,15:00-10:00,3,3,0,-GL to -5,3,16+,pass,left,,screen,0.141705523
+2022,PIT,Home,2nd,9:59-8:00,2,1,up 4-8,+20 to +11,2,7-10,run,middle,center,,0.43936265
+2022,PIT,Home,2nd,9:59-8:00,2,1,up 4-8,+20 to +11,2,7-10,run,right,end,,0.046615182
+2022,PIT,Home,2nd,9:59-8:00,2,1,up 4-8,+20 to +11,2,7-10,pass,left,,screen,0.543538505
+2022,PIT,Home,2nd,9:59-8:00,2,1,up 4-8,+20 to +11,2,7-10,pass,middle,,intermediate,0.042817798
+2022,PIT,Home,3rd,7:59-6:00,3,2,up 1-3,-40 to +36,1,3-6,run,right,tackle,,0.278929052
+2022,PIT,Home,3rd,7:59-6:00,3,2,up 1-3,-40 to +36,1,3-6,run,left,guard,,0.354265586
+2022,PIT,Home,3rd,7:59-6:00,3,2,up 1-3,-40 to +36,1,3-6,pass,middle,,screen,0.257686578
+2022,PIT,Home,3rd,7:59-6:00,3,2,up 1-3,-40 to +36,1,3-6,pass,right,,deep,0.046816066
+2022,PIT,Home,4th,5:59-4:00,1,0,up 12-14+,-6 to -14,3,1-2,run,left,end,,0.547389649
+2022,PIT,Home,4th,5:59-4:00,1,0,up 12-14+,-6 to -14,3,1-2,run,middle,center,,0.320936886
+2022,PIT,Home,4th,5:59-4:00,1,0,up 12-14+,-6 to -14,3,1-2,pass,right,,long,0.125682605
+2022,PIT,Home,4th,5:59-4:00,1,0,up 12-14+,-6 to -14,3,1-2,pass,left,,short,0.008489828
+2022,PIT,Home,OT,9:59-8:00,1,1,0,+35 to +21,2,7-10,run,middle,center,,0.180748158
+2022,PIT,Home,OT,9:59-8:00,1,1,0,+35 to +21,2,7-10,run,right,tackle,,0.033219574
+2022,PIT,Home,OT,9:59-8:00,1,1,0,+35 to +21,2,7-10,kick,,,,0.863542733
+2022,PIT,Home,OT,9:59-8:00,1,1,0,+35 to +21,2,7-10,pass,middle,,long,0.007565976
+2022,PIT,Away,1st,3:59-2:00,2,3,down 1-3,+20 to +11,4,11-15,pass,right,,intermediate,0.019032165
+2022,PIT,Away,1st,3:59-2:00,2,3,down 1-3,+20 to +11,4,11-15,pass,left,,intermediate,0.011566463
+2022,PIT,Away,1st,3:59-2:00,2,3,down 1-3,+20 to +11,4,11-15,kick,,,,0.961362429
+2022,PIT,Away,1st,3:59-2:00,2,3,down 1-3,+20 to +11,4,11-15,pass,right,,long,0.041989888
+2022,PIT,Away,2nd,1:59-0:00,1,2,down 9-11,-15 to -39,1,7-10,run,left,guard,,0.404905058
+2022,PIT,Away,2nd,1:59-0:00,1,2,down 9-11,-15 to -39,1,7-10,run,middle,center,,0.114211845
+2022,PIT,Away,2nd,1:59-0:00,1,2,down 9-11,-15 to -39,1,7-10,pass,right,,short,0.49907163
+2022,PIT,Away,2nd,1:59-0:00,1,2,down 9-11,-15 to -39,1,7-10,pass,left,,screen,0.024721864
+2022,PIT,Away,3rd,15:00-10:00,3,3,down 12-14+,-40 to +36,4,1-2,run,middle,center,,0.184713151
+2022,PIT,Away,3rd,15:00-10:00,3,3,down 12-14+,-40 to +36,4,1-2,run,right,end,,0.040777873
+2022,PIT,Away,3rd,15:00-10:00,3,3,down 12-14+,-40 to +36,4,1-2,punt,,,,0.866779955
+2022,PIT,Away,3rd,15:00-10:00,3,3,down 12-14+,-40 to +36,4,1-2,pass,middle,,screen,0.011079026
+2022,PIT,Away,4th,9:59-8:00,0,1,down 4-8,+5 to +GL,4,3-6,run,right,tackle,,0.018310646
+2022,PIT,Away,4th,9:59-8:00,0,1,down 4-8,+5 to +GL,4,3-6,run,left,end,,0.016218176
+2022,PIT,Away,4th,9:59-8:00,0,1,down 4-8,+5 to +GL,4,3-6,kick,,,,0.96877805
+2022,PIT,Away,4th,9:59-8:00,0,1,down 4-8,+5 to +GL,4,3-6,pass,right,,short,0.011615864
