@@ -693,12 +693,12 @@
       // Define function to place the offense
       function placeOffense(selectedLOS, selectedTeam){
         var no_data = {
-                          Team: '',
-                          play_type: '',
-                          direction: '',
-                          gap_zone: '',
-                          probability: ''
-                         }
+                       Team: '',
+                       play_type: '',
+                       direction: '',
+                       gap_zone: '',
+                       probability: ''
+                      }
         
         // Define variables
         var primary_hex = selectedTeam.primary_hex
@@ -1032,13 +1032,26 @@
         
         // Extract prediction probabilities and update the visualization
         predictedPlays.forEach(d => {
-          var new_data = {
+          if (d.play_type === 'kick' || d.play_type === 'punt'){
+            var new_data = {
+                          Team: selectedTeamName,
+                          play_type: d.play_type,
+                          probability: d.prob
+                         }
+          } else {
+            var new_data = {
                           Team: selectedTeamName,
                           play_type: d.play_type,
                           direction: d.side_of_field,
                           gap_zone: d.run_gap + " " + d.pass_depth,
                           probability: d.prob
                          }
+          }
+          
+          
+          
+          
+          
           
           new_opacity = d.prob ** (1/3)
           
@@ -1071,7 +1084,15 @@
         
         // Create Tooltip features for Players/Zones
         d3.selectAll('.offense_class').on('mouseover', function(event, d){
-                  const tooltipInfo = 
+                  if ( d3.select(this).datum().play_type == 'kick' || d3.select(this).datum().play_type == 'punt' ){
+                    tooltipInfo = 
+                      `
+                        <p><strong>Team:</strong> ${d3.select(this).datum().Team}</p>
+                        <p><strong>Play Type:</strong> ${d3.select(this).datum().play_type}</p>
+                        <p><strong>Probability:</strong> ${d3.format(".5f")(d3.select(this).datum().probability)}</p>
+                      `
+                  } else {
+                    tooltipInfo = 
                       `
                         <p><strong>Team:</strong> ${d3.select(this).datum().Team}</p>
                         <p><strong>Play Type:</strong> ${d3.select(this).datum().play_type}</p>
@@ -1079,8 +1100,9 @@
                         <p><strong>Gap/Zone:</strong> ${d3.select(this).datum().gap_zone}</p>
                         <p><strong>Probability:</strong> ${d3.format(".5f")(d3.select(this).datum().probability)}</p>
                       `
-                   tooltip.style('visibility', 'visible')
-                          .html(tooltipInfo)
+                  }
+                  tooltip.style('visibility', 'visible')
+                         .html(tooltipInfo)
                  })
                  .on('mousemove', function(event){
                     tooltip.style('top', (d3.event.pageY -200) + 'px')
@@ -1337,7 +1359,7 @@
                        " " +
                        d.gap_zone +
                        " (" +
-                       d3.format(".2f")(d.prob)*100 +
+                       (d3.format(".2f")(d.prob)*100).toFixed(0) +
                        "%)"
                        )
         )
@@ -1350,16 +1372,16 @@
       })
       
       // Set Dropdown Defaults
-      teamSelector.property('value', 'CHI')
-      losSelector.property('value', '33')
+      teamSelector.property('value', 'PIT')
+      losSelector.property('value', '-48')
       offHomeAwaySelector.property('value', 'Home')
-      quarterSelector.property('value', 'OT')
-      gameClockSelector.property('value', '9:59-8:00')
-      remainingOffTOsSelector.property('value', '1')
-      remainingDefTOsSelector.property('value', '1')
-      offPointDiffSelector.property('value', '0')
-      downSelector.property('value', '2')
-      distanceSelector.property('value', '7-10')
+      quarterSelector.property('value', '3rd')
+      gameClockSelector.property('value', '7:59-6:00')
+      remainingOffTOsSelector.property('value', '3')
+      remainingDefTOsSelector.property('value', '2')
+      offPointDiffSelector.property('value', 'up 1-3')
+      downSelector.property('value', '1')
+      distanceSelector.property('value', '3-6')
       
       
     })
