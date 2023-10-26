@@ -7,7 +7,7 @@
     
   <style>
     body {
-      background-color: black;
+      background-color: #000435;
       padding: 0;
       display: flex;
       flex-direction: column;
@@ -114,7 +114,18 @@
     width: 70%;
   }
   
-  
+  .tooltip{
+    display: hidden;
+    padding: 0px 10px 0px 10px;
+    z-index: 9999;
+    background-color: #000435;
+    color: #B3A369;
+    border: 1px solid white;
+    border-radius: 20px;
+    opacity: 0.85;
+    font-size: 18px;
+    position: absolute;
+  }
   
   </style>
     
@@ -128,8 +139,9 @@
     
     <body>
     
-    <!-- <script type="text/javascript" src="lib/d3-legend.min.js"></script> -->
-    <!-- <script type="text/javascript" src="lib/d3-tip.min.js"></script> -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.9.1/d3-tip.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.9.1/d3-tip.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.9.1/d3-tip.min.js.map"></script>
     <script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
     <script type="text/javascript" src="https://d3js.org/d3-dsv.v2.min.js"></script>
     
@@ -224,7 +236,7 @@
       .append('h1')
       .attr('id', 'pageTitle')
       .attr('class', 'pageTitle_class')
-      .style('color', '#AA0000')
+      .style('color', '#B3A369')
       .style('font-size', '50px')
       .style('text-shadow', '-0.5px -0.5px 0 white, 0.5px -0.5px 0 white')
       .text('NFL Offensive Play Predictor')
@@ -233,9 +245,16 @@
     const tblArea = d3.select('.fieldSection')
                 .append("svg")
                 .attr("id", "tableArea")
-                .attr('id', 'tableArea_class')
+                .attr('class', 'tableArea_class')
                 .attr("width", tablW + margin.left + margin.right)
                 .attr("height", h + margin.top + margin.bottom)
+    const tblFootnote = tblArea.append('text')
+                  .attr('id', 'tableFootnote')
+                  .attr('fill', 'white')
+                  .attr('font-size', 15)
+                  .attr('x', margin.left - 10)
+                  .attr('y', h + 75)
+                  .text('(%) = est. chance of given play being called under specified conditions')
     
     const tblBackdrop = tblArea.append('rect')
                  .attr('width', tablW)
@@ -243,14 +262,15 @@
                  .attr('x', margin.left)
                  .attr('y', margin.top)
                  .attr('fill', 'white')
-                 .attr('stroke', '#AA0000')
+                 .attr('stroke', '#B3A369')
                  .attr('stroke-width', 10)
+                 .attr('fill-opacity', 0.95)
     
     const tblTitle = tblArea.append('text')
                   .attr('id', 'tableTitle')
                   .attr('class', 'tableTitle_class')
-                  .attr('fill', '#AA0000')
-                  .attr('stroke', '#AA0000')
+                  .attr('fill', '#B3A369')
+                  .attr('stroke', '#B3A369')
                   .attr('font-size', 30)
                   .attr('text-anchor', 'middle')
                   .attr('x', margin.left + tablW / 2 )
@@ -260,8 +280,8 @@
     const tblSubTitle = tblArea.append('text')
                   .attr('id', 'tableSubTitle')
                   .attr('class', 'tableTitle_class')
-                  .attr('fill', 'black')
-                  .attr('stroke', 'black')
+                  .attr('fill', '#000435')
+                  .attr('stroke', '#000435')
                   .attr('font-size', 40)
                   .attr('text-anchor', 'middle')
                   .attr('x', margin.left + tablW / 2 )
@@ -273,7 +293,7 @@
                   .attr('height', 70)
                   .attr('x', margin.left + margin.left)
                   .attr('y', margin.top*2 + 85)
-                  .attr('fill', '#003B1B')
+                  .attr('fill', '#000435')
                   .attr("rx", 20) 
                   .attr("ry", 20)
     const tblRow1Num = tblArea.append('text')
@@ -295,7 +315,7 @@
                   .attr('height', 70)
                   .attr('x', margin.left + margin.left)
                   .attr('y', margin.top*2 + 170)
-                  .attr('fill', '#003B1B')
+                  .attr('fill', '#000435')
                   .attr("rx", 20) 
                   .attr("ry", 20)
     const tblRow2Num = tblArea.append('text')
@@ -317,7 +337,7 @@
                   .attr('height', 70)
                   .attr('x', margin.left + margin.left)
                   .attr('y', margin.top*2 + 255)
-                  .attr('fill', '#003B1B')
+                  .attr('fill', '#000435')
                   .attr("rx", 20) 
                   .attr("ry", 20)
     const tblRow3Num = tblArea.append('text')
@@ -338,9 +358,15 @@
     const svg = d3.select('.fieldSection')
                 .append("svg")
                 .attr("id", "fieldArea")
-                .attr('id', 'fieldArea_class')
+                .attr('class', 'fieldArea_class')
                 .attr("width", w + margin.left + margin.right)
                 .attr("height", h + margin.top + margin.bottom)
+    
+    // Define tooltip
+    var tooltip = d3.select('body')
+                        .append('div')
+                        .attr('id', 'tooltip')
+                        .attr('class', 'tooltip')
     
     // define global variables             
     let field 
@@ -363,13 +389,9 @@
       }
     }).then(function (data) {
       
-      // Look at the data in the browser's developer tools console
-        //console.log(data) 
-          
       // Create Team Dropdown
       const teamValues = data.map(d => d.team).sort()
-        //console.log(teamValues)
-          
+        
       teamSelector = d3.select('#teamDropdown')
                       .style('position', 'absolute')
       teamOptions = teamSelector.selectAll('option')
@@ -377,12 +399,13 @@
                       .enter().append('option')
                       .attr('value', d => d)
                       .text(d => d)
+      
       // Create LOS Dropdown
       const losValues = []
       for (let i = 1; i<=49; i++){ losValues.push(i) }
       losValues.push(50)
       for (let i = -49; i<=-1; i++){ losValues.push(i) }
-        //console.log(losValues)
+      
       losSelector = d3.select('#losDropdown')
                     .style('position', 'absolute')
       losOptions = losSelector.selectAll('option')
@@ -392,7 +415,7 @@
                     .text(d => d)
       
       // Create and outline the football field.
-      field = svg.append('g')
+      field = svg.insert('g', ':first-child')
                   .attr('id', 'field')
                   .attr('class', 'field_class')
                   .attr("transform", "translate(" + margin.left + "," + (margin.top - 0) + ")")
@@ -669,15 +692,23 @@
       
       // Define function to place the offense
       function placeOffense(selectedLOS, selectedTeam){
+        var no_data = {
+                          Team: '',
+                          play_type: '',
+                          direction: '',
+                          gap_zone: '',
+                          probability: ''
+                         }
+        
         // Define variables
         var primary_hex = selectedTeam.primary_hex
         var secondary_hex = selectedTeam.secondary_hex
         
         // Place the LOS
         if (selectedLOS < 0) {
-          var x = (margin.left - 50) + (10*3 + (-1*selectedLOS)*3)*(w/360) + (2.6 * 3)*(w/360)
+          var x = (margin.left - 50) + (10*3 + (-1*selectedLOS)*3)*(w/360) + (3.3 * 3)*(w/360)
         } else {
-          var x = (margin.left - 50) + (10*3 + (100 - selectedLOS)*3)*(w/360)+ (2.6 * 3)*(w/360)
+          var x = (margin.left - 50) + (10*3 + (100 - selectedLOS)*3)*(w/360)+ (3.3 * 3)*(w/360)
         }
         
         // Draw the Passing Zones
@@ -694,6 +725,7 @@
                               .attr('stroke', primary_hex)
                               .attr('stroke-width', '2')
                               .attr('fill-opacity', .01)
+                              .data([no_data])
         const leftShort = zones.append('rect')
                               .attr('id', 'left_short')
                               .attr('class', 'offense_class')
@@ -705,6 +737,7 @@
                               .attr('stroke', primary_hex)
                               .attr('stroke-width', '2')
                               .attr('fill-opacity', .01)
+                              .data([no_data])
         const leftIntermediate = zones.append('rect')
                               .attr('id', 'left_intermediate')
                               .attr('class', 'offense_class')
@@ -716,6 +749,7 @@
                               .attr('stroke', primary_hex)
                               .attr('stroke-width', '2')
                               .attr('fill-opacity', .01)
+                              .data([no_data])
         const leftLong = zones.append('rect')
                               .attr('id', 'left_long')
                               .attr('class', 'offense_class')
@@ -727,6 +761,7 @@
                               .attr('stroke', primary_hex)
                               .attr('stroke-width', '2')
                               .attr('fill-opacity', .01)
+                              .data([no_data])
         const leftDeep = zones.append('rect')
                               .attr('id', 'left_deep')
                               .attr('class', 'offense_class')
@@ -738,6 +773,7 @@
                               .attr('stroke', primary_hex)
                               .attr('stroke-width', '2')
                               .attr('fill-opacity', .01)
+                              .data([no_data])
         const midScreen = zones.append('rect')
                               .attr('id', 'middle_screen')
                               .attr('class', 'offense_class')
@@ -749,6 +785,7 @@
                               .attr('stroke', primary_hex)
                               .attr('stroke-width', '2')
                               .attr('fill-opacity', .01)
+                              .data([no_data])
         const midShort = zones.append('rect')
                               .attr('id', 'middle_short')
                               .attr('class', 'offense_class')
@@ -760,6 +797,7 @@
                               .attr('stroke', primary_hex)
                               .attr('stroke-width', '2')
                               .attr('fill-opacity', .01)
+                              .data([no_data])
         const midIntermediate = zones.append('rect')
                               .attr('id', 'middle_intermediate')
                               .attr('class', 'offense_class')
@@ -771,6 +809,7 @@
                               .attr('stroke', primary_hex)
                               .attr('stroke-width', '2')
                               .attr('fill-opacity', .01)
+                              .data([no_data])
         const midLong = zones.append('rect')
                               .attr('id', 'middle_long')
                               .attr('class', 'offense_class')
@@ -782,6 +821,7 @@
                               .attr('stroke', primary_hex)
                               .attr('stroke-width', '2')
                               .attr('fill-opacity', .01)
+                              .data([no_data])
         const midDeep = zones.append('rect')
                               .attr('id', 'middle_deep')
                               .attr('class', 'offense_class')
@@ -793,6 +833,7 @@
                               .attr('stroke', primary_hex)
                               .attr('stroke-width', '2')
                               .attr('fill-opacity', .01)
+                              .data([no_data])
         const rightScreen = zones.append('rect')
                               .attr('id', 'right_screen')
                               .attr('class', 'offense_class')
@@ -804,6 +845,7 @@
                               .attr('stroke', primary_hex)
                               .attr('stroke-width', '2')
                               .attr('fill-opacity', .01)
+                              .data([no_data])
         const rightShort = zones.append('rect')
                               .attr('id', 'right_short')
                               .attr('class', 'offense_class')
@@ -815,6 +857,7 @@
                               .attr('stroke', primary_hex)
                               .attr('stroke-width', '2')
                               .attr('fill-opacity', .01)
+                              .data([no_data])
         const rightIntermediate = zones.append('rect')
                               .attr('id', 'right_intermediate')
                               .attr('class', 'offense_class')
@@ -826,6 +869,7 @@
                               .attr('stroke', primary_hex)
                               .attr('stroke-width', '2')
                               .attr('fill-opacity', .01)
+                              .data([no_data])
         const rightLong = zones.append('rect')
                               .attr('id', 'right_long')
                               .attr('class', 'offense_class')
@@ -837,6 +881,7 @@
                               .attr('stroke', primary_hex)
                               .attr('stroke-width', '2')
                               .attr('fill-opacity', .01)
+                              .data([no_data])
         const rightDeep = zones.append('rect')
                               .attr('id', 'right_deep')
                               .attr('class', 'offense_class')
@@ -848,6 +893,7 @@
                               .attr('stroke', primary_hex)
                               .attr('stroke-width', '2')
                               .attr('fill-opacity', .01)
+                              .data([no_data])
                               
         // Draw the LOS
         los = field.append('line')
@@ -873,6 +919,7 @@
                               .attr('stroke', primary_hex)
                               .attr('stroke-width', '3')
                               .attr('fill-opacity', .01)
+                              .data([no_data])
         const leftGuard = offense.append('circle')
                               .attr('id', 'left_guard')
                               .attr('class', 'offense_class')
@@ -883,6 +930,7 @@
                               .attr('stroke', primary_hex)
                               .attr('stroke-width', '3')
                               .attr('fill-opacity', .01)
+                              .data([no_data])
         const rightGuard = offense.append('circle')
                               .attr('id', 'right_guard')
                               .attr('class', 'offense_class')
@@ -893,6 +941,7 @@
                               .attr('stroke', primary_hex)
                               .attr('stroke-width', '3')
                               .attr('fill-opacity', .01)
+                              .data([no_data])
         const leftTackle = offense.append('circle')
                               .attr('id', 'left_tackle')
                               .attr('class', 'offense_class')
@@ -903,6 +952,7 @@
                               .attr('stroke', primary_hex)
                               .attr('stroke-width', '3')
                               .attr('fill-opacity', .01)
+                              .data([no_data])
         const rightTackle = offense.append('circle')
                               .attr('id', 'right_tackle')
                               .attr('class', 'offense_class')
@@ -913,6 +963,7 @@
                               .attr('stroke', primary_hex)
                               .attr('stroke-width', '3')
                               .attr('fill-opacity', .01)
+                              .data([no_data])
         const leftEnd = offense.append('circle')
                               .attr('id', 'left_end')
                               .attr('class', 'offense_class')
@@ -923,6 +974,7 @@
                               .attr('stroke', primary_hex)
                               .attr('stroke-width', '3')
                               .attr('fill-opacity', .01)
+                              .data([no_data])
         const rightEnd = offense.append('circle')
                               .attr('id', 'right_end')
                               .attr('class', 'offense_class')
@@ -933,6 +985,7 @@
                               .attr('stroke', primary_hex)
                               .attr('stroke-width', '3')
                               .attr('fill-opacity', .01)
+                              .data([no_data])
         const kicker = offense.append('circle')
                               .attr('id', 'kicker')
                               .attr('class', 'offense_class')
@@ -943,6 +996,7 @@
                               .attr('stroke', primary_hex)
                               .attr('stroke-width', '3')
                               .attr('fill-opacity', .01)
+                              .data([no_data])
         const punter = offense.append('circle')
                               .attr('id', 'punter')
                               .attr('class', 'offense_class')
@@ -952,7 +1006,8 @@
                               .attr('fill', secondary_hex)
                               .attr('stroke', primary_hex)
                               .attr('stroke-width', '3')
-                              .attr('fill-opacity', .01)                     
+                              .attr('fill-opacity', .01)
+                              .data([no_data])
       }
       
       // Create offense based on Selected LOS and Selected Team
@@ -976,8 +1031,14 @@
         }
         
         // Extract prediction probabilities and update the visualization
-        console.log(predictedPlays)
         predictedPlays.forEach(d => {
+          var new_data = {
+                          Team: selectedTeamName,
+                          play_type: d.play_type,
+                          direction: d.side_of_field,
+                          gap_zone: d.run_gap + " " + d.pass_depth,
+                          probability: d.prob
+                         }
           
           new_opacity = d.prob ** (1/3)
           
@@ -987,27 +1048,48 @@
             new_radius = 5
           }
           
+          // Update opacity, radius, and data
           if (d.play_type === 'pass') {
             playZone = d.side_of_field+'_'+d.pass_depth
-              console.log('playZone: ' + playZone)
-              console.log('new opacity: ' + new_opacity)
             d3.select('#'+playZone).attr('fill-opacity', new_opacity)
+                                   .data([new_data])
           } else if (d.play_type === 'run'){
             playGap = d.side_of_field+'_'+d.run_gap
-              console.log('playGap: ' + playGap)
-              console.log('new opacity: ' + new_opacity)
-              console.log('new radius: ' + new_radius)
             d3.select('#'+playGap).attr('r', new_radius)
                                   .attr('fill-opacity', new_opacity)
+                                   .data([new_data])
           } else if (d.play_type === 'kick'){
             d3.select('#kicker').attr('r', new_radius)
                                 .attr('fill-opacity', new_opacity)
+                                   .data([new_data])
           } else {
             d3.select('#punter').attr('r', new_radius)
                                 .attr('fill-opacity', new_opacity)
+                                   .data([new_data])
           }
         })
-      })
+        
+        // Create Tooltip features for Players/Zones
+        d3.selectAll('.offense_class').on('mouseover', function(event, d){
+                  const tooltipInfo = 
+                      `
+                        <p><strong>Team:</strong> ${d3.select(this).datum().Team}</p>
+                        <p><strong>Play Type:</strong> ${d3.select(this).datum().play_type}</p>
+                        <p><strong>Direction:</strong> ${d3.select(this).datum().direction}</p>
+                        <p><strong>Gap/Zone:</strong> ${d3.select(this).datum().gap_zone}</p>
+                        <p><strong>Probability:</strong> ${d3.format(".5f")(d3.select(this).datum().probability)}</p>
+                      `
+                   tooltip.style('visibility', 'visible')
+                          .html(tooltipInfo)
+                 })
+                 .on('mousemove', function(event){
+                    tooltip.style('top', (d3.event.pageY -200) + 'px')
+                           .style('left', (d3.event.pageX - 200)  + 'px')
+                 })
+                 .on('mouseout', function(){
+                     tooltip.style('visibility', 'hidden');
+                 });  
+        }) 
       
     })
     .catch(function (error) {
@@ -1039,9 +1121,6 @@
       }
     }).then(function (data2) {
       
-      // Look at the data in the browser's developer tools console
-        console.log(data2) 
-      
       // Create  Dropdown Menus
       //// Home Away Dropdown
       const offHomeAwayValues = [
@@ -1056,7 +1135,6 @@
                                                     .enter().append('option')
                                                     .attr('value', d => d)
                                                     .text(d => d)
-      
       //// Quarter Dropdown
       const quarterValues = [
                               '1st',
@@ -1073,7 +1151,6 @@
                                             .enter().append('option')
                                             .attr('value', d => d)
                                             .text(d => d)
-      
       //// Game Clock Dropdown
       const gameClockValues = [
                                 '15:00-10:00',
@@ -1091,7 +1168,6 @@
                                                 .enter().append('option')
                                                 .attr('value', d => d)
                                                 .text(d => d)
-      
       //// Remaining Offensive Timeouts Dropdown
       const remainingOffTOsValues = [
                                       '3',
@@ -1107,7 +1183,6 @@
                                                             .enter().append('option')
                                                             .attr('value', d => d)
                                                             .text(d => d)
-      
       //// Remaining Defensive Timeouts Dropdown
       const remainingDefTOsValues = [
                                       '3',
@@ -1123,7 +1198,6 @@
                                                             .enter().append('option')
                                                             .attr('value', d => d)
                                                             .text(d => d)
-      
       //// Offensive Point Differential Dropdown
       const offPointDiffValues = [
                                   'up 12-14+',
@@ -1144,7 +1218,6 @@
                                                       .enter().append('option')
                                                       .attr('value', d => d)
                                                       .text(d => d)
-      
       //// Down Dropdown
       const downValues = [
                           '1',
@@ -1160,7 +1233,6 @@
                                       .enter().append('option')
                                       .attr('value', d => d)
                                       .text(d => d)
-      
       //// Distance Dropdown
       const distanceValues = [
                               '16+',
@@ -1237,22 +1309,18 @@
         }))
       }
       
-      
       // Filter the data on the button click.
       d3.select('#filterButton').on('click', function() {
         filterData()
-          console.log('Predicted Plays: ', predictedPlays)
         
-        const tooltipData = predictedPlays.map(d => ({
+        tooltipData = predictedPlays.map(d => ({
                        play_type: d.play_type,
                        direction: d.side_of_field,
                        gap_zone: d.run_gap + " " + d.pass_depth,
                        prob: d.prob
                       }))
-          console.log('Tooltip Data: ', tooltipData)
         
         const top3Table = tooltipData.sort((a,b) => b.prob - a.prob).slice(0,3)
-          console.log('Top 3 Table: ', top3Table)
         
         // Remove old visulization
         d3.select('#teamFieldMarkings').remove()
@@ -1269,8 +1337,8 @@
                        " " +
                        d.gap_zone +
                        " (" +
-                       d3.format(".2f")(d.prob) +
-                       ")"
+                       d3.format(".2f")(d.prob)*100 +
+                       "%)"
                        )
         )
         
@@ -1280,7 +1348,6 @@
         d3.select('#tableRow2Text').text(tblInfo[1])
         d3.select('#tableRow3Text').text(tblInfo[2])
       })
-      
       
       // Set Dropdown Defaults
       teamSelector.property('value', 'CHI')
@@ -1299,6 +1366,9 @@
   .catch(function (error) {
     console.log(error);
   });
+  
+  
+  
   
   
   </script>
