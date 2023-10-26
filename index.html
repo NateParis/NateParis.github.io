@@ -1055,8 +1055,8 @@
           
           new_opacity = d.prob ** (1/3)
           
-          if (d.prob >= 0.20){
-            new_radius = 5 * (d.prob * (100/14))
+          if (d.prob >= 0.10){
+            new_radius = 5 * (10 / (1 + (2.71828**(-9*d.prob)))) - 25
           } else {
             new_radius = 5
           }
