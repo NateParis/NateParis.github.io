@@ -1253,17 +1253,19 @@
         // Create a dict that maps filter selections to model features
         const filterData = {
           posteam: selectedTeam,
+          posteam_type: selectedHomeAway,
           qtr: selectedQuarterOrdinal,
           down: selectedDown,
-          distance: selectedDistanceOrdinal,
-          los: selectedLOSOrdinal,
-          posteam_type: selectedHomeAway,
-          point_diff: selectedPointDiffOrdinal,
-          game_clock: selectedClockOrdinal,
           posteam_timeouts_remaining: selectedOffTOs,
           defteam_timeouts_remaining: selectedDefTOs,
+          game_clock: selectedClockOrdinal,
+          distance: selectedDistanceOrdinal,
+          los: selectedLOSOrdinal,
+          point_diff: selectedPointDiffOrdinal
         }
           console.log(filterData)
+        const requestData = {input_data: filterData};
+        
       
         // Send a POST request to the Flask API
         fetch('https://cse6242project-4c0f1b9aa8d4.herokuapp.com/predict', {
@@ -1271,7 +1273,7 @@
           headers: {
                   'Content-type': 'application/json',
                  },
-          body: JSON.stringify(filterData),
+          body: JSON.stringify(requestData),
         })
         .then((response) => response.json())
         .then((data) => {
