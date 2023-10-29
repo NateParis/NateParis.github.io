@@ -1293,16 +1293,12 @@
              sideOfFieldArray.push(separatedString[1])
              gapZoneArray.push(separatedString[2])
           })
-            console.log(playTypeArray)
-            console.log(sideOfFieldArray)
-            console.log(gapZoneArray)
-            console.log(probsList)
             
           //// Combining {playTypeArray, sideOfFieldArray, gapZoneArray, probsList}
           for (let i=0; i<probsList.length; i++){
             const row = {
               play_type: playTypeArray[i],
-              side_of_field: sideOfFieldArray[i],
+              direction: sideOfFieldArray[i],
               gap_zone: gapZoneArray[i],
               prob: probsList[i]
             }
@@ -1313,8 +1309,8 @@
           // Update the tooltip
           tooltipData = predictedPlays.map(d => ({
                           play_type: d.play_type,
-                          direction: d.side_of_field,
-                          gap_zone: d.run_gap + " " + d.pass_depth,
+                          direction: d.direction,
+                          gap_zone: d.gap_zone,
                           prob: d.prob
                         }))
               
