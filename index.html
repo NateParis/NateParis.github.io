@@ -1145,7 +1145,7 @@
         d3.select('#lineOfScrimmage').remove()
         d3.select('#offensivePlayers').remove()
         d3.select('#passingZones').remove()
-        predictedPlays = []
+        
       
         // Log all current filter selections
         const selectedTeam = d3.select('#teamDropdown').node().value
@@ -1429,7 +1429,11 @@
                  })
                  .on('mouseout', function(){
                      tooltip.style('visibility', 'hidden');
-                 });  
+                 }); 
+        
+        // Clear predictedPlays for the next calculation         
+        predictedPlays = []
+        
         }) 
         
       
