@@ -1137,14 +1137,15 @@
       
       
       // Update probabilities and Top3 Table on filterButton click
-      let predictedPlays = []
+      let predictedPlays
       d3.select('#filterButton').on('click', function() {
             
-        // Remove old visulization
+        // Remove old visulization and clear predictedPlays
         d3.select('#teamFieldMarkings').remove()
         d3.select('#lineOfScrimmage').remove()
         d3.select('#offensivePlayers').remove()
         d3.select('#passingZones').remove()
+        predictedPlays = []
       
         // Log all current filter selections
         const selectedTeam = d3.select('#teamDropdown').node().value
@@ -1306,17 +1307,8 @@
           }
             console.log(predictedPlays)
             
-          // Update the tooltip
-          tooltipData = predictedPlays.map(d => ({
-                          play_type: d.play_type,
-                          direction: d.direction,
-                          gap_zone: d.gap_zone,
-                          prob: d.prob
-                        }))
-            console.log(tooltipData) 
-            
           // Gather table information
-          const top3Table = tooltipData.sort((a,b) => b.prob - a.prob).slice(0,3)
+          const top3Table = predictedPlays.sort((a,b) => b.prob - a.prob).slice(0,3)
             console.log(top3Table)
           tblInfo = new Array()
           top3Table.forEach(d =>
@@ -1373,8 +1365,8 @@
             var new_data = {
                           Team: selectedTeamName,
                           play_type: d.play_type,
-                          direction: d.side_of_field,
-                          gap_zone: d.run_gap + " " + d.pass_depth,
+                          direction: d.direction,
+                          gap_zone: d.gap_zone,
                           probability: d.prob
                          }
           }
