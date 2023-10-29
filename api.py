@@ -3,10 +3,12 @@
 from flask import Flask, request, jsonify
 from catboost import CatBoostClassifier
 from azure.storage.blob import BlobServiceClient
+from flask_cors import CORS
 
 ###############################################################################
 
 app = Flask(__name)
+CORS(app)
 
 # Initialize Azure Blob Service Client
 connection_string = 'DefaultEndpointsProtocol=https;AccountName=cse6242project;AccountKey=Tlh4dR/uMwY2IMui9+NT0MCsLd77UJjSM8VZGJcEVu3ZOhJOo9xzuyf3tknNB+bYoUo2LOr/fqB8+AStbmeRlQ==;EndpointSuffix=core.windows.net'
