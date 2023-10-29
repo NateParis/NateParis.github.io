@@ -2,29 +2,48 @@
 # Load packages
 from flask import Flask, request, jsonify
 from catboost import CatBoostClassifier
+from azure.storage.blob import BlobServiceClient
 
 ###############################################################################
 
 app = Flask(__name)
 
-# Dictionary to hold pre-trained Classifiers
-models = {}
+# Initialize Azure Blob Service Client
+connection_string = 'DefaultEndpointsProtocol=https;AccountName=cse6242project;AccountKey=Tlh4dR/uMwY2IMui9+NT0MCsLd77UJjSM8VZGJcEVu3ZOhJOo9xzuyf3tknNB+bYoUo2LOr/fqB8+AStbmeRlQ==;EndpointSuffix=core.windows.net'
+blob_service_client = BlobServiceClient.from_connection_string(connection_string)
+container_name = 'catboost-models' 
 
-# Load pre-trained Classifiers for each team
-teams = ['ARI','ATL','BAL','BUF','CAR','CHI','CIN','CLE','DAL','DEN',
-         'DET','GB','HOU','IND','JAX','KC','LA','LAC','LV','MIA','MIN',
-         'NE','NO', 'NYG','NYJ','PHI','PIT','SEA','SF','TB','TEN','WAS']
 
-for team in teams:
+def load_model(team):
+    # Generate the blob name for the model
+    blob_name = f"{team}_classifier.cbm"
+
+    # Download the model from Azure Blob Storage
+    blob_client = blob_service_client.get_blob_client(container=container_name, blob=blob_name)
+    blob_data = blob_client.download_blob()
+    model_data = blob_data.readall()  
+    
+    # Load the model from the downloaded data
     model = CatBoostClassifier()
-    model.load_model('{team}_classifier.cbm')
-    models[team] = model
+    return model.load_model(model_data)
+    
 
 @app.route('/predict', methods=['Post'])
 def predict():
     data = request.get_json()
     team = data.get('posteam', 'SF')
-    model = models.get(team, None)
+    
+    # Generate the blob name for the model
+    blob_name = f"{team}_classifier.cbm"
+
+    # Download the model from Azure Blob Storage
+    blob_client = blob_service_client.get_blob_client(container=container_name, blob=blob_name)
+    blob_data = blob_client.download_blob()
+    model_data = blob_data.readall()  
+    
+    # Load the model from the downloaded data
+    model = CatBoostClassifier()
+    model.load_model(model_data)
     
     if model is None:
         return jsonify({'error': f'Model for team {team} not found.'})
