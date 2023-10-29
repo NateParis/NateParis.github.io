@@ -538,6 +538,7 @@
                       .enter().append('option')
                       .attr('value', d => d)
                       .text(d => d)
+      ////######################################################################
       
       // Create and outline the football field.
       field = svg.insert('g', ':first-child')
@@ -739,6 +740,7 @@
                                 .attr('letter-spacing', '9px')
       }
       
+      ////######################################################################
       
       // Define function to change field logos
       function changeTeamLogos(selectedTeam){
@@ -1135,17 +1137,19 @@
                               .data([no_data])
       }
       
+      ////######################################################################
       
       // Update probabilities and Top3 Table on filterButton click
-      let predictedPlays = []
+      let predictedPlays 
       d3.select('#filterButton').on('click', function() {
             
-        // Remove old visulization and clear predictedPlays
+        // Remove old visulization
         d3.select('#teamFieldMarkings').remove()
         d3.select('#lineOfScrimmage').remove()
         d3.select('#offensivePlayers').remove()
         d3.select('#passingZones').remove()
         
+            //\\\\\\\\\\\\\\\\\########################///////////////////////\\
       
         // Log all current filter selections
         const selectedTeam = d3.select('#teamDropdown').node().value
@@ -1159,6 +1163,7 @@
         const selectedOffTOs = parseInt(d3.select('#remainingOffTOsDropdown').node().value)
         const selectedDefTOs = parseInt(d3.select('#remainingDefTOsDropdown').node().value)
         
+            //\\\\\\\\\\\\\\\\\########################///////////////////////\\
       
         // Convert all ranged filter selections to ordinal responses
         //// Quarter -> ordinal
@@ -1199,6 +1204,7 @@
               selectedLOSOrdinal = 7
         } else if ( selectedLOS <= -15 && selectedLOS >= -39 ){
               selectedLOSOrdinal = 6
+        
         } else if ( (selectedLOS <= -40 && selectedLOS >= -49) || 
                     (selectedLOS <= 50 && selectedLOS >= 36)  ){
               selectedLOSOrdinal = 5
@@ -1266,7 +1272,8 @@
         }
         const requestData = {input_data: filterData};
         
-      
+            //\\\\\\\\\\\\\\\\\########################///////////////////////\\
+        
         // Send a POST request to the Flask API
         fetch('https://cse6242project-4c0f1b9aa8d4.herokuapp.com/predict', {
           method: 'POST',
@@ -1282,7 +1289,9 @@
             //console.log(playList)
           const probsList = data.predicted_probs[0]
             //console.log(probsList)
-      
+            
+            |||||||||||||||||||||||||--------------------------|||||||||||||||||
+            
           // Create predictedPlays dataframe  
           //// Deconstruct each play in playList into {play_type, direction, gap_zone}
           var playTypeArray = new Array()
@@ -1296,6 +1305,7 @@
           })
             
           //// Combining {playTypeArray, sideOfFieldArray, gapZoneArray, probsList}
+          predictedPlays = []
           for (let i=0; i<probsList.length; i++){
             const row = {
               play_type: playTypeArray[i],
@@ -1306,6 +1316,8 @@
             predictedPlays.push(row)
           }
             console.log(predictedPlays)
+          
+            |||||||||||||||||||||||||--------------------------|||||||||||||||||
             
           // Gather table information
           const top3Table = predictedPlays.sort((a,b) => b.prob - a.prob).slice(0,3)
@@ -1332,12 +1344,16 @@
         })
       })
       
+      ////######################################################################
       
       // Create offense based on Selected LOS and Selected Team
       d3.select('#vizButton').on('click', function() {
+        
         const selectedLOS = parseInt(d3.select('#losDropdown').node().value)
         const selectedTeamName = d3.select('#teamDropdown').node().value
         const selectedTeam = data.find(d => d.team === selectedTeamName)
+        
+            //\\\\\\\\\\\\\\\\\########################///////////////////////\\
         
         // Place Team Logo and End Zones
         if ( selectedTeam ) {
@@ -1352,6 +1368,8 @@
           d3.select('#passingZones').remove()
           placeOffense(selectedLOS, selectedTeam)
         }
+        
+            //\\\\\\\\\\\\\\\\\########################///////////////////////\\
         
         // Extract prediction probabilities and update the visualization
         predictedPlays.forEach(d => {
@@ -1371,7 +1389,6 @@
                          }
           }
           
-          
           new_opacity = d.prob ** (1/3)
           
           if (d.prob >= 0.20){
@@ -1382,11 +1399,11 @@
           
           // Update opacity, radius, and data
           if (d.play_type === 'pass') {
-            playZone = d.side_of_field+'_'+d.pass_depth
+            playZone = d.direction+'_'+d.gap_zone
             d3.select('#'+playZone).attr('fill-opacity', new_opacity)
                                    .data([new_data])
           } else if (d.play_type === 'run'){
-            playGap = d.side_of_field+'_'+d.run_gap
+            playGap = d.direction+'_'+d.gap_zone
             d3.select('#'+playGap).attr('r', new_radius)
                                   .attr('fill-opacity', new_opacity)
                                    .data([new_data])
@@ -1400,6 +1417,8 @@
                                    .data([new_data])
           }
         })
+        
+            //\\\\\\\\\\\\\\\\\########################///////////////////////\\
         
         // Create Tooltip features for Players/Zones
         d3.selectAll('.offense_class').on('mouseover', function(event, d){
@@ -1429,25 +1448,22 @@
                  })
                  .on('mouseout', function(){
                      tooltip.style('visibility', 'hidden');
-                 }); 
-        
-        // Clear predictedPlays for the next calculation         
-        predictedPlays = []
+                 });
         
         }) 
-        
       
+      ////######################################################################  
       // Set Dropdown Defaults
       teamSelector.property('value', 'SF')
-      losSelector.property('value', '-48')
+      losSelector.property('value', '50')
       offHomeAwaySelector.property('value', 'Home')
-      quarterSelector.property('value', '3rd')
-      gameClockSelector.property('value', '7:59-6:00')
+      quarterSelector.property('value', '1st')
+      gameClockSelector.property('value', '15:00-10:00')
       remainingOffTOsSelector.property('value', '3')
-      remainingDefTOsSelector.property('value', '2')
-      offPointDiffSelector.property('value', 'up 1-3')
+      remainingDefTOsSelector.property('value', '3')
+      offPointDiffSelector.property('value', '0')
       downSelector.property('value', '1')
-      distanceSelector.property('value', '4-6')  
+      distanceSelector.property('value', '7-10')  
     
     })
     .catch(function (error) {
