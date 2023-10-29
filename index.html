@@ -230,8 +230,9 @@
     margin = {top: 50, right: 25, bottom: 50, left: 25};
     
     const tablW = 1300 - w
+  /////////////////////////////////////////////////////////////////////////////    
     
-    // append title to titleArea of the page
+    // Create title in titleArea of the page
     d3.select('.titleArea')
       .append('h1')
       .attr('id', 'pageTitle')
@@ -240,14 +241,17 @@
       .style('font-size', '50px')
       .style('text-shadow', '-0.5px -0.5px 0 white, 0.5px -0.5px 0 white')
       .text('NFL Offensive Play Predictor')
-    
-    // append table element to the fieldSection of the page
+  
+  /////////////////////////////////////////////////////////////////////////////
+  
+    // Create table in Table Area of the page
     const tblArea = d3.select('.fieldSection')
                 .append("svg")
                 .attr("id", "tableArea")
                 .attr('class', 'tableArea_class')
                 .attr("width", tablW + margin.left + margin.right)
                 .attr("height", h + margin.top + margin.bottom)
+    
     const tblFootnote = tblArea.append('text')
                   .attr('id', 'tableFootnote')
                   .attr('fill', 'white')
@@ -265,7 +269,6 @@
                  .attr('stroke', '#B3A369')
                  .attr('stroke-width', 10)
                  .attr('fill-opacity', 0.95)
-    
     const tblTitle = tblArea.append('text')
                   .attr('id', 'tableTitle')
                   .attr('class', 'tableTitle_class')
@@ -276,7 +279,6 @@
                   .attr('x', margin.left + tablW / 2 )
                   .attr('y', margin.top*2 +10)
                   .text('Top 3 Predicted Plays')
-    
     const tblSubTitle = tblArea.append('text')
                   .attr('id', 'tableSubTitle')
                   .attr('class', 'tableTitle_class')
@@ -309,7 +311,6 @@
                   .attr('x', margin.left + 40 + 25)
                   .attr('y', 225)
                   .text('')
-                  
     const tblRow2 = tblArea.append('rect')
                   .attr('width', tablW-margin.left-margin.right)
                   .attr('height', 70)
@@ -331,7 +332,6 @@
                   .attr('x', margin.left + 40 + 25)
                   .attr('y', 225 + 85)
                   .text('')
-    
     const tblRow3 = tblArea.append('rect')
                   .attr('width', tablW-margin.left-margin.right)
                   .attr('height', 70)
@@ -353,29 +353,168 @@
                   .attr('x', margin.left + 40 + 25)
                   .attr('y', 225 + 170)
                   .text('')
-                
-    // append svg element to the fieldSection of the page
+  
+  /////////////////////////////////////////////////////////////////////////////                
+    // Create the main svg in the Field Area of the page
     const svg = d3.select('.fieldSection')
                 .append("svg")
                 .attr("id", "fieldArea")
                 .attr('class', 'fieldArea_class')
                 .attr("width", w + margin.left + margin.right)
                 .attr("height", h + margin.top + margin.bottom)
-    
+
+  /////////////////////////////////////////////////////////////////////////////
     // Define tooltip
     var tooltip = d3.select('body')
                         .append('div')
                         .attr('id', 'tooltip')
                         .attr('class', 'tooltip')
-    
-    // define global variables             
-    let field 
-    let predictedPlays
-    let teamSelector
-    let losSelector
-  
+
   ///////////////////////////////////////////////////////////////////////////
-  
+    // Create All Dropdown Menus, except Team.
+    
+    //// LOS Dropdown
+    const losValues = []
+    for (let i = 1; i<=49; i++){ losValues.push(i) }
+      losValues.push(50)
+    for (let i = -49; i<=-1; i++){ losValues.push(i) }
+    losSelector = d3.select('#losDropdown')
+                    .style('position', 'absolute')
+    losOptions = losSelector.selectAll('option')
+                    .data(losValues)
+                    .enter().append('option')
+                    .attr('value', d => d)
+                    .text(d => d)
+      
+    //// Home Away Dropdown
+    const offHomeAwayValues = [
+                                 'Home',
+                                 'Away'
+                                ]
+        //console.log(offHomeAwayValues)
+    const offHomeAwaySelector = d3.select('#offHomeAwayDropdown')
+                                  .style('position', 'absolute')
+    const offHomeAwayOptions = offHomeAwaySelector.selectAll('option')
+                                                  .data(offHomeAwayValues)
+                                                  .enter().append('option')
+                                                  .attr('value', d => d)
+                                                  .text(d => d)
+    //// Quarter Dropdown
+    const quarterValues = [
+                              '1st',
+                              '2nd',
+                              '3rd',
+                              '4th',
+                              'OT'
+                            ]
+      //console.log(quarterValues)
+    const quarterSelector = d3.select('#quarterDropdown')
+                              .style('position', 'absolute')
+    const quarterOptions = quarterSelector.selectAll('option')
+                                          .data(quarterValues)
+                                          .enter().append('option')
+                                          .attr('value', d => d)
+                                          .text(d => d)
+    //// Game Clock Dropdown
+    const gameClockValues = [
+                                '15:00-10:00',
+                                '9:59-8:00',
+                                '7:59-6:00',
+                                '5:59-4:00',
+                                '3:59-2:00',
+                                '1:59-0:00'
+                              ]
+      //console.log(gameClockValues)
+    const gameClockSelector = d3.select('#gameClockDropdown')
+                                .style('position', 'absolute')
+    const gameClockOptions = gameClockSelector.selectAll('option')
+                                              .data(gameClockValues)
+                                              .enter().append('option')
+                                              .attr('value', d => d)
+                                              .text(d => d)
+    //// Remaining Offensive Timeouts Dropdown
+    const remainingOffTOsValues = [
+                                      3,
+                                      2,
+                                      1,
+                                      0
+                                    ]
+      //console.log(remainingOffTOsValues)
+    const remainingOffTOsSelector = d3.select('#remainingOffTOsDropdown')
+                                      .style('position', 'absolute')
+    const remainingOffTOsOptions = remainingOffTOsSelector.selectAll('option')
+                                                          .data(remainingOffTOsValues)
+                                                          .enter().append('option')
+                                                          .attr('value', d => d)
+                                                          .text(d => d)
+    //// Remaining Defensive Timeouts Dropdown
+    const remainingDefTOsValues = [
+                                      3,
+                                      2,
+                                      1,
+                                      0
+                                    ]
+      //console.log(remainingDefTOsValues)
+    const remainingDefTOsSelector = d3.select('#remainingDefTOsDropdown')
+                                      .style('position', 'absolute')
+    const remainingDefTOsOptions = remainingDefTOsSelector.selectAll('option')
+                                                          .data(remainingDefTOsValues)
+                                                          .enter().append('option')
+                                                          .attr('value', d => d)
+                                                          .text(d => d)
+    //// Offensive Point Differential Dropdown
+    const offPointDiffValues = [
+                                  'up 12-14+',
+                                  'up 9-11',
+                                  'up 4-8',
+                                  'up 1-3',
+                                  '0',
+                                  'down 1-3',
+                                  'down 4-8',
+                                  'down 9-11',
+                                  'down 12-14+'
+                                ]
+      //console.log(offPointDiffValues)
+    const offPointDiffSelector = d3.select('#offPointDiffDropdown')
+                                  .style('position', 'absolute')
+    const offPointDiffOptions = offPointDiffSelector.selectAll('option')
+                                                    .data(offPointDiffValues)
+                                                    .enter().append('option')
+                                                    .attr('value', d => d)
+                                                    .text(d => d)
+    //// Down Dropdown
+    const downValues = [
+                        1,
+                        2,
+                        3,
+                        4
+                        ]
+      //console.log(downValues)
+    const downSelector = d3.select('#downDropdown')
+                          .style('position', 'absolute')
+    const downOptions = downSelector.selectAll('option')
+                                    .data(downValues)
+                                    .enter().append('option')
+                                    .attr('value', d => d)
+                                    .text(d => d)
+    //// Distance Dropdown
+    const distanceValues = [
+                            '16+',
+                            '11-15',
+                            '7-10',
+                            '4-6',
+                            '2-3',
+                            '1'
+                            ]
+      //console.log(distanceValues)
+    const distanceSelector = d3.select('#distanceDropdown')
+                              .style('position', 'absolute')
+    const distanceOptions = distanceSelector.selectAll('option')
+                                            .data(distanceValues)
+                                            .enter().append('option')
+                                            .attr('value', d => d)
+     
+  //////////////////////////////////////////////////////////////////////////  
   
     // Load team aesthetics data
     d3.dsv(",", "team_data.csv", function (d) {
@@ -399,20 +538,6 @@
                       .enter().append('option')
                       .attr('value', d => d)
                       .text(d => d)
-      
-      // Create LOS Dropdown
-      const losValues = []
-      for (let i = 1; i<=49; i++){ losValues.push(i) }
-      losValues.push(50)
-      for (let i = -49; i<=-1; i++){ losValues.push(i) }
-      
-      losSelector = d3.select('#losDropdown')
-                    .style('position', 'absolute')
-      losOptions = losSelector.selectAll('option')
-                    .data(losValues)
-                    .enter().append('option')
-                    .attr('value', d => d)
-                    .text(d => d)
       
       // Create and outline the football field.
       field = svg.insert('g', ':first-child')
@@ -1010,6 +1135,209 @@
                               .data([no_data])
       }
       
+      
+      // Update probabilities and Top3 Table on filterButton click
+      let predictedPlays = []
+      d3.select('#filterButton').on('click', function() {
+            
+        // Remove old visulization
+        d3.select('#teamFieldMarkings').remove()
+        d3.select('#lineOfScrimmage').remove()
+        d3.select('#offensivePlayers').remove()
+        d3.select('#passingZones').remove()
+      
+        // Log all current filter selections
+        const selectedTeam = d3.select('#teamDropdown').node().value
+        const selectedQuarter = d3.select('#quarterDropdown').node().value
+        const selectedDown = parseInt(d3.select('#downDropdown').node().value)
+        const selectedDistance = d3.select('#distanceDropdown').node().value
+        const selectedLOS = parseInt(d3.select('#losDropdown').node().value)
+        const selectedHomeAway = d3.select('#offHomeAwayDropdown').node().value
+        const selectedPointDiff = d3.select('#offPointDiffDropdown').node().value
+        const selectedClock = d3.select('#gameClockDropdown').node().value
+        const selectedOffTOs = parseInt(d3.select('#remainingOffTOsDropdown').node().value)
+        const selectedDefTOs = parseInt(d3.select('#remainingDefTOsDropdown').node().value)
+        
+      
+        // Convert all ranged filter selections to ordinal responses
+        //// Quarter -> ordinal
+        let selectedQuarterOrdinal  = ''
+        if ( selectedQuarter == 'OT' ){
+              selectedQuarterOrdinal = 5
+        } else if ( selectedQuarter == '4th' ){
+              selectedQuarterOrdinal = 4
+        } else if ( selectedQuarter == '3rd' ){
+              selectedQuarterOrdinal = 3
+        } else if ( selectedQuarter == '2nd' ){
+              selectedQuarterOrdinal = 2
+        } else {
+              selectedQuarterOrdinal = 1
+        }
+        
+        //// Distance -> selectedLOSOrdinal
+        let selectedDistanceOrdinal  = ''
+        if ( selectedDistance == '16+' ){
+              selectedDistanceOrdinal = 6
+        } else if ( selectedDistance == '11-15' ){
+              selectedDistanceOrdinal = 5
+        } else if ( selectedDistance == '7-10' ){
+              selectedDistanceOrdinal = 4
+        } else if ( selectedDistance == '4-6' ){
+              selectedDistanceOrdinal = 3
+        } else if ( selectedDistance == '2-3' ){
+              selectedDistanceOrdinal = 2
+        } else {
+              selectedDistanceOrdinal = 1
+        }
+        
+        //// LOS -> ordinal
+        let selectedLOSOrdinal = ''
+        if ( selectedLOS <= -1 && selectedLOS >= -5 ){
+              selectedLOSOrdinal = 8
+        } else if ( selectedLOS <= -6 && selectedLOS >= -14 ){
+              selectedLOSOrdinal = 7
+        } else if ( selectedLOS <= -15 && selectedLOS >= -39 ){
+              selectedLOSOrdinal = 6
+        } else if ( (selectedLOS <= -40 && selectedLOS >= -49) || 
+                    (selectedLOS <= 50 && selectedLOS >= 36)  ){
+              selectedLOSOrdinal = 5
+        } else if ( selectedLOS <= 35 && selectedLOS >= 21 ){
+              selectedLOSOrdinal = 4
+        } else if ( selectedLOS <= 20 && selectedLOS >= 11 ){
+              selectedLOSOrdinal = 3
+        } else if ( selectedLOS <= 10 && selectedLOS >= 6 ){
+              selectedLOSOrdinal = 2
+        } else {
+              selectedLOSOrdinal = 1
+        }
+          
+        //// Point Difference -> ordinal
+        let selectedPointDiffOrdinal  = ''
+        if ( selectedPointDiff == 'up 12-14+' ){
+              selectedPointDiffOrdinal = 9
+        } else if ( selectedPointDiff == 'up 9-11' ){
+              selectedPointDiffOrdinal = 8
+        } else if ( selectedPointDiff == 'up 4-8' ){
+              selectedPointDiffOrdinal = 7
+        } else if (selectedPointDiff  == 'up 1-3' ){
+              selectedPointDiffOrdinal = 6
+        } else if ( selectedPointDiff == '0' ){
+              selectedPointDiffOrdinal  = 5
+        } else if ( selectedPointDiff == 'down 1-3' ){
+              selectedPointDiffOrdinal = 4
+        } else if ( selectedPointDiff == 'down 4-8' ){
+              selectedPointDiffOrdinal = 3
+        } else if ( selectedPointDiff == 'down 9-11' ){
+              selectedPointDiffOrdinal = 2
+        } else {
+              selectedPointDiffOrdinal = 1
+        }
+        
+        //// Clock -> ordinal
+        let selectedClockOrdinal = ''
+        if ( selectedClock == '15:00-10:00' ){
+              selectedClockOrdinal = 6
+        } else if ( selectedClock == '9:59-8:00' ){
+              selectedClockOrdinal = 5
+        } else if ( selectedClock == '7:59-6:00' ){
+              selectedClockOrdinal = 4
+        } else if ( selectedClock == '5:59-4:00' ){
+              selectedClockOrdinal = 3
+        } else if ( selectedClock == '3:59-2:00' ){
+              selectedClockOrdinal = 2
+        } else {
+              selectedClockOrdinal = 1
+        }
+        
+        
+        // Create a dict that maps filter selections to model features
+        const filterData = {
+          posteam: selectedTeam,
+          qtr: selectedQuarterOrdinal,
+          down: selectedDown,
+          distance: selectedDistanceOrdinal,
+          los: selectedLOSOrdinal,
+          posteam_type: selectedHomeAway,
+          point_diff: selectedPointDiffOrdinal,
+          game_clock: selectedClockOrdinal,
+          posteam_timeouts_remaining: selectedOffTOs,
+          defteam_timeouts_remaining: selectedDefTOs,
+        }
+          console.log(filterData)
+      
+        // Send a POST request to the Flask API
+        fetch('https://cse6242project.azurewebsites.net/predict', {
+          method: 'POST',
+          headers: {
+                  'Content-type': 'application/json',
+                 },
+          body: JSON.stringify(filterData),
+        })
+        .then((response) => response.json())
+        .then((data) => {
+          // Process API response
+          const playList = data.predicted_plays
+            console.log(playList)
+          const probsList = data.predicted_probs
+            console.log(probsList)
+      
+          // Create predictedPlays dataframe  
+          //// Deconstruct each play in playList into {play_type, direction, gap_zone}
+          var playTypeArray = new Array()
+          var sideOfFieldArray = new Array()
+          var gapZoneArray = new Array()
+          playList.forEach(play => 
+             separatedString = play.split(','),
+             playTypeArray.push(separatedString[0]), 
+             sideOfFieldArray.push(separatedString[1]),
+             gapZone.push(separatedString[2])
+          )
+            
+          //// Combining {playTypeArray, sideOfFieldArray, gapZoneArray, probsList}
+          for (let i=0; i<probsList.length; i++){
+            const row = {
+              play_type: playTypeArray[i],
+              side_of_field: sideOfFieldArray[i],
+              gap_zone: gapZoneArray[i],
+              prob: probsList[i]
+            }
+            predictedPlays.push(row)
+          }
+            console.log(predictedPlays)
+            
+          // Update the tooltip
+          tooltipData = predictedPlays.map(d => ({
+                          play_type: d.play_type,
+                          direction: d.side_of_field,
+                          gap_zone: d.run_gap + " " + d.pass_depth,
+                          prob: d.prob
+                        }))
+              
+          // Gather table information
+          const top3Table = tooltipData.sort((a,b) => b.prob - a.prob).slice(0,3)
+          tblInfo = new Array()
+          top3Table.forEach(d =>
+              tblInfo.push(d.play_type + 
+                          ": " + 
+                          d.direction + 
+                          " " +
+                          d.gap_zone +
+                          " (" +
+                          (d3.format(".2f")(d.prob)*100).toFixed(0) +
+                          "%)")
+          )
+              
+          // Update Table
+          d3.select('#tableSubTitle').text(d3.select('#teamDropdown').node().value)         
+          d3.select('#tableRow1Text').text(tblInfo[0])
+          d3.select('#tableRow2Text').text(tblInfo[1])
+          d3.select('#tableRow3Text').text(tblInfo[2])
+        }).catch(function (error) {
+          console.log(error)
+        })
+      })
+      
+      
       // Create offense based on Selected LOS and Selected Team
       d3.select('#vizButton').on('click', function() {
         const selectedLOS = parseInt(d3.select('#losDropdown').node().value)
@@ -1049,14 +1377,10 @@
           }
           
           
-          
-          
-          
-          
           new_opacity = d.prob ** (1/3)
           
-          if (d.prob >= 0.10){
-            new_radius = 5 * (10 / (1 + (2.71828**(-9*d.prob)))) - 25
+          if (d.prob >= 0.20){
+            new_radius = 5 * (d.prob * (100/14))
           } else {
             new_radius = 5
           }
@@ -1112,267 +1436,10 @@
                      tooltip.style('visibility', 'hidden');
                  });  
         }) 
-      
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-    
-  
-  ////////////////////////////////////////////////////////////////////////////
-    
-    
-    d3.dsv(",", "trial_predictions.csv", function (d) {
-      return {
-        year: d.year,
-        team: d.team,
-        home_away: d.home_away,
-        quarter: d.quarter,
-        game_clock: d.game_clock,
-        off_remaining_to: d.off_remaining_to,
-        def_remaining_to: d.def_remaining_to,
-        off_point_diff: d.off_point_diff, 
-        los: d.los,
-        down: d.down, 
-        distance: d.distance,
-        play_type: d.play_type,
-        side_of_field: d.side_of_field, 
-        run_gap: d.run_gap, 
-        pass_depth: d.pass_depth, 
-        prob: +d.prob
-      }
-    }).then(function (data2) {
-      
-      // Create  Dropdown Menus
-      //// Home Away Dropdown
-      const offHomeAwayValues = [
-                                 'Home',
-                                 'Away'
-                                ]
-        //console.log(offHomeAwayValues)
-      const offHomeAwaySelector = d3.select('#offHomeAwayDropdown')
-                                    .style('position', 'absolute')
-      const offHomeAwayOptions = offHomeAwaySelector.selectAll('option')
-                                                    .data(offHomeAwayValues)
-                                                    .enter().append('option')
-                                                    .attr('value', d => d)
-                                                    .text(d => d)
-      //// Quarter Dropdown
-      const quarterValues = [
-                              '1st',
-                              '2nd',
-                              '3rd',
-                              '4th',
-                              'OT'
-                            ]
-        //console.log(quarterValues)
-      const quarterSelector = d3.select('#quarterDropdown')
-                                .style('position', 'absolute')
-      const quarterOptions = quarterSelector.selectAll('option')
-                                            .data(quarterValues)
-                                            .enter().append('option')
-                                            .attr('value', d => d)
-                                            .text(d => d)
-      //// Game Clock Dropdown
-      const gameClockValues = [
-                                '15:00-10:00',
-                                '9:59-8:00',
-                                '7:59-6:00',
-                                '5:59-4:00',
-                                '3:59-2:00',
-                                '1:59-0:00'
-                              ]
-        //console.log(gameClockValues)
-      const gameClockSelector = d3.select('#gameClockDropdown')
-                                  .style('position', 'absolute')
-      const gameClockOptions = gameClockSelector.selectAll('option')
-                                                .data(gameClockValues)
-                                                .enter().append('option')
-                                                .attr('value', d => d)
-                                                .text(d => d)
-      //// Remaining Offensive Timeouts Dropdown
-      const remainingOffTOsValues = [
-                                      '3',
-                                      '2',
-                                      '1',
-                                      '0'
-                                    ]
-        //console.log(remainingOffTOsValues)
-      const remainingOffTOsSelector = d3.select('#remainingOffTOsDropdown')
-                                        .style('position', 'absolute')
-      const remainingOffTOsOptions = remainingOffTOsSelector.selectAll('option')
-                                                            .data(remainingOffTOsValues)
-                                                            .enter().append('option')
-                                                            .attr('value', d => d)
-                                                            .text(d => d)
-      //// Remaining Defensive Timeouts Dropdown
-      const remainingDefTOsValues = [
-                                      '3',
-                                      '2',
-                                      '1',
-                                      '0'
-                                    ]
-        //console.log(remainingDefTOsValues)
-      const remainingDefTOsSelector = d3.select('#remainingDefTOsDropdown')
-                                        .style('position', 'absolute')
-      const remainingDefTOsOptions = remainingDefTOsSelector.selectAll('option')
-                                                            .data(remainingDefTOsValues)
-                                                            .enter().append('option')
-                                                            .attr('value', d => d)
-                                                            .text(d => d)
-      //// Offensive Point Differential Dropdown
-      const offPointDiffValues = [
-                                  'up 12-14+',
-                                  'up 9-11',
-                                  'up 4-8',
-                                  'up 1-3',
-                                  '0',
-                                  'down 1-3',
-                                  'down 4-8',
-                                  'down 9-11',
-                                  'down 12-14+'
-                                ]
-        //console.log(offPointDiffValues)
-      const offPointDiffSelector = d3.select('#offPointDiffDropdown')
-                                    .style('position', 'absolute')
-      const offPointDiffOptions = offPointDiffSelector.selectAll('option')
-                                                      .data(offPointDiffValues)
-                                                      .enter().append('option')
-                                                      .attr('value', d => d)
-                                                      .text(d => d)
-      //// Down Dropdown
-      const downValues = [
-                          '1',
-                          '2',
-                          '3',
-                          '4'
-                        ]
-        //console.log(downValues)
-      const downSelector = d3.select('#downDropdown')
-                            .style('position', 'absolute')
-      const downOptions = downSelector.selectAll('option')
-                                      .data(downValues)
-                                      .enter().append('option')
-                                      .attr('value', d => d)
-                                      .text(d => d)
-      //// Distance Dropdown
-      const distanceValues = [
-                              '16+',
-                              '11-15',
-                              '7-10',
-                              '3-6',
-                              '1-2',
-                              '<1'
-                            ]
-        //console.log(distanceValues)
-      const distanceSelector = d3.select('#distanceDropdown')
-                                .style('position', 'absolute')
-      const distanceOptions = distanceSelector.selectAll('option')
-                                              .data(distanceValues)
-                                              .enter().append('option')
-                                              .attr('value', d => d)
-                                              .text(d => d)
-      
-      
-      // Filter Data2 based on selected Values
-      function filterData() {
-        // Define selected Values
-        const selectedTeam = d3.select('#teamDropdown').node().value
-        const selectedQuarter = d3.select('#quarterDropdown').node().value
-        const selectedDown = d3.select('#downDropdown').node().value
-        const selectedDistance = d3.select('#distanceDropdown').node().value
-        const selectedLOS = parseInt(d3.select('#losDropdown').node().value)
-        const selectedHomeAway = d3.select('#offHomeAwayDropdown').node().value
-        const selectedPointDiff = d3.select('#offPointDiffDropdown').node().value
-        const selectedClock = d3.select('#gameClockDropdown').node().value
-        const selectedOffTOs = d3.select('#remainingOffTOsDropdown').node().value
-        const selectedDefTOs = d3.select('#remainingDefTOsDropdown').node().value
         
-        // Convert selected LOS to a selected LOS Range
-        let selectedLOSRange = ''
-        if ( selectedLOS <= -1 && selectedLOS >= -5 ){
-          selectedLOSRange = '-GL to -5'
-        } else if ( selectedLOS <= -6 && selectedLOS >= -14 ){
-          selectedLOSRange = '-6 to -14'
-        } else if ( selectedLOS <= -15 && selectedLOS >= -39 ){
-          selectedLOSRange = '-15 to -39'
-        } else if ( (selectedLOS <= -40 && selectedLOS >= -49) || 
-                    (selectedLOS <= 50 && selectedLOS >= 36)  ){
-          selectedLOSRange = '-40 to +36'
-        } else if ( selectedLOS <= 35 && selectedLOS >= 21 ){
-          selectedLOSRange = '+35 to +21'
-        } else if ( selectedLOS <= 20 && selectedLOS >= 11 ){
-          selectedLOSRange = '+20 to +11'
-        } else if ( selectedLOS <= 10 && selectedLOS >= 6 ){
-          selectedLOSRange = '+10 to +6'
-        } else {
-          selectedLOSRange = '+5 to +GL'
-        }
-        
-        filteredData2 = data2.filter(d => 
-                 d.team === selectedTeam && 
-                 d.quarter === selectedQuarter &&
-                 d.down === selectedDown &&
-                 d.distance === selectedDistance &&
-                 d.los === selectedLOSRange &&
-                 d.home_away === selectedHomeAway &&
-                 d.off_point_diff === selectedPointDiff &&
-                 d.game_clock === selectedClock &&
-                 d.off_remaining_to === selectedOffTOs &&
-                 d.def_remaining_to === selectedDefTOs
-        )
-        
-        predictedPlays = filteredData2.map(d => ({
-          play_type: d.play_type,
-          side_of_field: d.side_of_field,
-          run_gap: d.run_gap,
-          pass_depth: d.pass_depth,
-          prob: d.prob
-        }))
-      }
-      
-      // Filter the data on the button click.
-      d3.select('#filterButton').on('click', function() {
-        filterData()
-        
-        tooltipData = predictedPlays.map(d => ({
-                       play_type: d.play_type,
-                       direction: d.side_of_field,
-                       gap_zone: d.run_gap + " " + d.pass_depth,
-                       prob: d.prob
-                      }))
-        
-        const top3Table = tooltipData.sort((a,b) => b.prob - a.prob).slice(0,3)
-        
-        // Remove old visulization
-        d3.select('#teamFieldMarkings').remove()
-        d3.select('#lineOfScrimmage').remove()
-        d3.select('#offensivePlayers').remove()
-        d3.select('#passingZones').remove()
-        
-        // Gather table information
-        tblInfo = new Array()
-        top3Table.forEach(d =>
-          tblInfo.push(d.play_type + 
-                       ": " + 
-                       d.direction + 
-                       " " +
-                       d.gap_zone +
-                       " (" +
-                       (d3.format(".2f")(d.prob)*100).toFixed(0) +
-                       "%)"
-                       )
-        )
-        
-        // Update Table
-        d3.select('#tableSubTitle').text(d3.select('#teamDropdown').node().value)         
-        d3.select('#tableRow1Text').text(tblInfo[0])
-        d3.select('#tableRow2Text').text(tblInfo[1])
-        d3.select('#tableRow3Text').text(tblInfo[2])
-      })
       
       // Set Dropdown Defaults
-      teamSelector.property('value', 'PIT')
+      teamSelector.property('value', 'SF')
       losSelector.property('value', '-48')
       offHomeAwaySelector.property('value', 'Home')
       quarterSelector.property('value', '3rd')
@@ -1381,18 +1448,14 @@
       remainingDefTOsSelector.property('value', '2')
       offPointDiffSelector.property('value', 'up 1-3')
       downSelector.property('value', '1')
-      distanceSelector.property('value', '3-6')
-      
-      
+      distanceSelector.property('value', '4-6')  
+    
     })
-  .catch(function (error) {
-    console.log(error);
-  });
-  
-  
-  
-  
-  
+    .catch(function (error) {
+      console.log(error);
+    });
+    
+      
   </script>
     
     </body>
