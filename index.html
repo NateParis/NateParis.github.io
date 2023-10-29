@@ -1313,9 +1313,11 @@
                           gap_zone: d.gap_zone,
                           prob: d.prob
                         }))
-              
+            console.log(tooltipData) 
+            
           // Gather table information
           const top3Table = tooltipData.sort((a,b) => b.prob - a.prob).slice(0,3)
+            console.log(top3Table)
           tblInfo = new Array()
           top3Table.forEach(d =>
               tblInfo.push(d.play_type + 
