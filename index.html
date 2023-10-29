@@ -1289,7 +1289,7 @@
           var sideOfFieldArray = new Array()
           var gapZoneArray = new Array()
           playList.forEach(play => 
-             separatedString = play.split(','),
+             var separatedString = play.split(','),
              playTypeArray.push(separatedString[0]), 
              sideOfFieldArray.push(separatedString[1]),
              gapZone.push(separatedString[2])
