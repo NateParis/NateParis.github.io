@@ -1263,7 +1263,6 @@
           los: selectedLOSOrdinal,
           point_diff: selectedPointDiffOrdinal
         }
-          console.log(filterData)
         const requestData = {input_data: filterData};
         
       
@@ -1279,9 +1278,9 @@
         .then((data) => {
           // Process API response
           const playList = data.predicted_plays
-            console.log(playList)
-          const probsList = data.predicted_probs
-            console.log(probsList)
+            //console.log(playList)
+          const probsList[0] = data.predicted_probs
+            //console.log(probsList)
       
           // Create predictedPlays dataframe  
           //// Deconstruct each play in playList into {play_type, direction, gap_zone}
@@ -1294,6 +1293,10 @@
              sideOfFieldArray.push(separatedString[1])
              gapZoneArray.push(separatedString[2])
           })
+            console.log(playTypeArray)
+            console.log(sideOfFieldArray)
+            console.log(gapZoneArray)
+            console.log(probsList)
             
           //// Combining {playTypeArray, sideOfFieldArray, gapZoneArray, probsList}
           for (let i=0; i<probsList.length; i++){
