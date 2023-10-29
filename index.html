@@ -1288,7 +1288,7 @@
           const probsList = data.predicted_probs[0]
             //console.log(probsList)
             
-            |||||||||||||||||||||||||--------------------------|||||||||||||||||
+            //\\\\\\\\\\\\\\\\\########################///////////////////////\\
             
           // Create predictedPlays dataframe  
           //// Deconstruct each play in playList into {play_type, direction, gap_zone}
@@ -1315,7 +1315,7 @@
           }
             console.log(predictedPlays)
           
-            |||||||||||||||||||||||||--------------------------|||||||||||||||||
+            //|||||||||||||||||||||||--------------------------|||||||||||||||\\
             
           // Gather table information
           const top3Table = predictedPlays.sort((a,b) => b.prob - a.prob).slice(0,3)
@@ -1451,6 +1451,7 @@
         }) 
       
       ////######################################################################  
+      
       // Set Dropdown Defaults
       teamSelector.property('value', 'SF')
       losSelector.property('value', '50')
