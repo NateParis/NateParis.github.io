@@ -1288,12 +1288,12 @@
           var playTypeArray = new Array()
           var sideOfFieldArray = new Array()
           var gapZoneArray = new Array()
-          playList.forEach(play => 
-             var separatedString = play.split(',')
-             playTypeArray.push(separatedString[0]), 
-             sideOfFieldArray.push(separatedString[1]),
-             gapZone.push(separatedString[2])
-          )
+          playList.forEach(play => {
+            var separatedString = play.split(',')
+             playTypeArray.push(separatedString[0]) 
+             sideOfFieldArray.push(separatedString[1])
+             gapZoneArray.push(separatedString[2])
+          })
             
           //// Combining {playTypeArray, sideOfFieldArray, gapZoneArray, probsList}
           for (let i=0; i<probsList.length; i++){
