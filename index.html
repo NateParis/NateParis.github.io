@@ -574,7 +574,7 @@
                                 .attr('stroke', 'white')
                                 .attr('stroke-width', '25')
       const ltBL = fieldOutline.append('line')
-                                  .attr('id', 'plusBackline')
+                                  .attr('id', 'minusBackline')
                                   .attr('class', 'outline_class')
                                   .attr('y1', 0)
                                   .attr('x1', - 12.5)
@@ -583,13 +583,13 @@
                                   .attr('stroke', 'white')
                                   .attr('stroke-width', '25')
       const rtBL = fieldOutline.append('line')
-                                  .attr('id', 'minusBackline')
+                                  .attr('id', 'plusBackline')
                                   .attr('class', 'outline_class')
                                   .attr('y1', 0)
                                   .attr('x1', w + 12.5)
                                   .attr('y2', h)
                                   .attr('x2', w + 12.5)
-                                  .attr('z', 999)
+                                  .attr('z-index', 9999)
                                   .attr('stroke', 'white')
                                   .attr('stroke-width', '25')
       
@@ -1022,7 +1022,6 @@
                               .attr('stroke-width', '2')
                               .attr('fill-opacity', .01)
                               .data([no_data])
-                              
         // Draw the LOS
         los = field.append('line')
                   .attr('id', 'lineOfScrimmage')
@@ -1288,7 +1287,7 @@
               //console.log(playList)
             var fg_index = playList.findIndex(play => play === 'field_goal,,')
               //console.log(fg_index)
-            playList[fg_index] = 'kick'
+            playList[fg_index] = 'kick,,'
               //console.log(playList)
           const probsList = data.predicted_probs[0]
             //console.log(probsList)
