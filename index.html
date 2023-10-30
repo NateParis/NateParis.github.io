@@ -1284,8 +1284,11 @@
         .then((data) => {
           // Process API response
           const playList = data.predicted_plays
-            //console.log(playList)
-          
+              //console.log(playList)
+            var fg_index = playList.findIndex(play => play === 'field_goal,,')
+              //console.log(fg_index)
+            playList[fg_index] = 'kick'
+              //console.log(playList)
           const probsList = data.predicted_probs[0]
             //console.log(probsList)
             
@@ -1314,13 +1317,13 @@
             }
             predictedPlays.push(row)
           }
-            console.log(predictedPlays)
+            //console.log(predictedPlays)
           
             //|||||||||||||||||||||||--------------------------|||||||||||||||\\
             
           // Gather table information
           const top3Table = predictedPlays.sort((a,b) => b.prob - a.prob).slice(0,3)
-            console.log(top3Table)
+            //console.log(top3Table)
           tblInfo = new Array()
           top3Table.forEach(d =>
               tblInfo.push(d.play_type + 
@@ -1395,10 +1398,10 @@
                          }
           }
           
-          new_opacity = d.prob ** (1/3)
+          new_opacity = d.prob ** (1/3)     // use cube root to adjust opacity
           
           if (d.prob >= 0.10){
-            new_radius = 5 * (d.prob * (100/14))
+            new_radius = 5 * ( 10 / (1 + Math.exp(-8 * d.prob) ) ) - 25 // use sigmoid function to adjust radius
           } else {
             new_radius = 5
           }
@@ -1406,7 +1409,7 @@
           // Update opacity, radius, and data
           if (d.play_type === 'pass') {
             playZone = d.direction+'_'+d.gap_zone.replace(/[^A-Za-z0-9]/g, '')
-              console.log('playZone: ', playZone)
+              //console.log('playZone: ', playZone)
             d3.select('#'+playZone).attr('fill-opacity', new_opacity)
                                    .data([new_data])
           } else if (d.play_type === 'run'){
@@ -1471,7 +1474,7 @@
       
       // Set Dropdown Defaults
       teamSelector.property('value', 'SF')
-      losSelector.property('value', '50')
+      losSelector.property('value', '-35')
       offHomeAwaySelector.property('value', 'Home')
       quarterSelector.property('value', '1st')
       gameClockSelector.property('value', '15:00-10:00')
