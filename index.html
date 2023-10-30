@@ -854,7 +854,7 @@
                               .attr('fill-opacity', .01)
                               .data([no_data])
         const leftShort = zones.append('rect')
-                              .attr('id', 'left_0-9 yds')
+                              .attr('id', 'left_09yds')
                               .attr('class', 'offense_class')
                               .attr('x', x)
                               .attr('y', 0)
@@ -866,7 +866,7 @@
                               .attr('fill-opacity', .01)
                               .data([no_data])
         const leftIntermediate = zones.append('rect')
-                              .attr('id', 'left_10-19 yds')
+                              .attr('id', 'left_1019yds')
                               .attr('class', 'offense_class')
                               .attr('x', x + 30 * (w/360))
                               .attr('y', 0)
@@ -878,7 +878,7 @@
                               .attr('fill-opacity', .01)
                               .data([no_data])
         const leftLong = zones.append('rect')
-                              .attr('id', 'left_20-34 yds')
+                              .attr('id', 'left_2034yds')
                               .attr('class', 'offense_class')
                               .attr('x', x + 60 * (w/360))
                               .attr('y', 0)
@@ -890,7 +890,7 @@
                               .attr('fill-opacity', .01)
                               .data([no_data])
         const leftDeep = zones.append('rect')
-                              .attr('id', 'left_35+ yds')
+                              .attr('id', 'left_35yds')
                               .attr('class', 'offense_class')
                               .attr('x', x + 105 * (w/360))
                               .attr('y', 0)
@@ -914,7 +914,7 @@
                               .attr('fill-opacity', .01)
                               .data([no_data])
         const midShort = zones.append('rect')
-                              .attr('id', 'middle_0-9 yds')
+                              .attr('id', 'middle_09yds')
                               .attr('class', 'offense_class')
                               .attr('x', x)
                               .attr('y', (160/3)*(w/360))
@@ -926,7 +926,7 @@
                               .attr('fill-opacity', .01)
                               .data([no_data])
         const midIntermediate = zones.append('rect')
-                              .attr('id', 'middle_10-19 yds')
+                              .attr('id', 'middle_1019yds')
                               .attr('class', 'offense_class')
                               .attr('x', x + 30 * (w/360))
                               .attr('y', (160/3)*(w/360))
@@ -938,7 +938,7 @@
                               .attr('fill-opacity', .01)
                               .data([no_data])
         const midLong = zones.append('rect')
-                              .attr('id', 'middle_20-34 yds')
+                              .attr('id', 'middle_2034yds')
                               .attr('class', 'offense_class')
                               .attr('x', x + 60 * (w/360))
                               .attr('y', (160/3)*(w/360))
@@ -950,7 +950,7 @@
                               .attr('fill-opacity', .01)
                               .data([no_data])
         const midDeep = zones.append('rect')
-                              .attr('id', 'middle_35+ yds')
+                              .attr('id', 'middle_35yds')
                               .attr('class', 'offense_class')
                               .attr('x', x + 105 * (w/360))
                               .attr('y', (160/3)*(w/360))
@@ -974,7 +974,7 @@
                               .attr('fill-opacity', .01)
                               .data([no_data])
         const rightShort = zones.append('rect')
-                              .attr('id', 'right_0-9 yds')
+                              .attr('id', 'right_09yds')
                               .attr('class', 'offense_class')
                               .attr('x', x)
                               .attr('y', h - (160/3)*(w/360))
@@ -986,7 +986,7 @@
                               .attr('fill-opacity', .01)
                               .data([no_data])
         const rightIntermediate = zones.append('rect')
-                              .attr('id', 'right_10-19 yds')
+                              .attr('id', 'right_1019yds')
                               .attr('class', 'offense_class')
                               .attr('x', x + 30 * (w/360))
                               .attr('y', h - (160/3)*(w/360))
@@ -998,7 +998,7 @@
                               .attr('fill-opacity', .01)
                               .data([no_data])
         const rightLong = zones.append('rect')
-                              .attr('id', 'right_20-34 yds')
+                              .attr('id', 'right_2034yds')
                               .attr('class', 'offense_class')
                               .attr('x', x + 60 * (w/360))
                               .attr('y', h - (160/3)*(w/360))
@@ -1010,7 +1010,7 @@
                               .attr('fill-opacity', .01)
                               .data([no_data])
         const rightDeep = zones.append('rect')
-                              .attr('id', 'right_35+ yds')
+                              .attr('id', 'right_35yds')
                               .attr('class', 'offense_class')
                               .attr('x', x + 105 * (w/360))
                               .attr('y', h - (160/3)*(w/360))
@@ -1037,7 +1037,7 @@
         const offense = field.append('g')
                             .attr('id', 'offensivePlayers')
         const center = offense.append('circle')
-                              .attr('id', 'middle')
+                              .attr('id', 'middle_')
                               .attr('class', 'offense_class')
                               .attr('cx', x-4)
                               .attr('cy', h/2)
@@ -1285,6 +1285,7 @@
           // Process API response
           const playList = data.predicted_plays
             //console.log(playList)
+          
           const probsList = data.predicted_probs[0]
             //console.log(probsList)
             
@@ -1377,6 +1378,13 @@
                           play_type: d.play_type,
                           probability: d.prob
                          }
+          } else if (d.play_type === 'run' && d.direction === 'middle'){
+            var new_data = {
+                          Team: selectedTeamName,
+                          play_type: d.play_type,
+                          direction: d.direction,
+                          probability: d.prob
+                         }
           } else {
             var new_data = {
                           Team: selectedTeamName,
@@ -1397,12 +1405,13 @@
           
           // Update opacity, radius, and data
           if (d.play_type === 'pass') {
-            playZone = d.direction+'_'+d.gap_zone
-            d3.select('#'+gap_zone).attr('fill-opacity', new_opacity)
+            playZone = d.direction+'_'+d.gap_zone.replace(/[^A-Za-z0-9]/g, '')
+              console.log('playZone: ', playZone)
+            d3.select('#'+playZone).attr('fill-opacity', new_opacity)
                                    .data([new_data])
           } else if (d.play_type === 'run'){
             playGap = d.direction+'_'+d.gap_zone
-            d3.select('#'+gap_zone).attr('r', new_radius)
+            d3.select('#'+playGap).attr('r', new_radius)
                                   .attr('fill-opacity', new_opacity)
                                    .data([new_data])
           } else if (d.play_type === 'kick'){
@@ -1427,7 +1436,15 @@
                         <p><strong>Play Type:</strong> ${d3.select(this).datum().play_type}</p>
                         <p><strong>Probability:</strong> ${d3.format(".5f")(d3.select(this).datum().probability)}</p>
                       `
-                  } else {
+                  } else if (d3.select(this).datum().play_type == 'run' && d3.select(this).datum().direction == 'middle') {
+                    tooltipInfo = 
+                      `
+                        <p><strong>Team:</strong> ${d3.select(this).datum().Team}</p>
+                        <p><strong>Play Type:</strong> ${d3.select(this).datum().play_type}</p>
+                        <p><strong>Direction:</strong> ${d3.select(this).datum().direction}</p>
+                        <p><strong>Probability:</strong> ${d3.format(".5f")(d3.select(this).datum().probability)}</p>
+                      `
+                  }else {
                     tooltipInfo = 
                       `
                         <p><strong>Team:</strong> ${d3.select(this).datum().Team}</p>
