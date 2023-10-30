@@ -183,7 +183,7 @@
             <div class = 'dropdown1'>
               <label for = 'losDropdown'>Line of Scrimmage:</label>
               <div class = 'menu1'>
-                <select id = 'losDropdown' value='50'></select>
+                <select id = 'losDropdown'></select>
               </div>
             </div>
           </div>
@@ -508,11 +508,12 @@
                             ]
       //console.log(distanceValues)
     const distanceSelector = d3.select('#distanceDropdown')
-                              .style('position', 'absolute')
+                               .style('position', 'absolute')
     const distanceOptions = distanceSelector.selectAll('option')
                                             .data(distanceValues)
                                             .enter().append('option')
                                             .attr('value', d => d)
+                                            .text(d => d)
      
   //////////////////////////////////////////////////////////////////////////  
   
@@ -1317,7 +1318,7 @@
             }
             predictedPlays.push(row)
           }
-            //console.log(predictedPlays)
+            console.log(predictedPlays)
           
             //|||||||||||||||||||||||--------------------------|||||||||||||||\\
             
@@ -1327,13 +1328,13 @@
           tblInfo = new Array()
           top3Table.forEach(d =>
               tblInfo.push(d.play_type + 
-                          ": " + 
-                          d.direction + 
-                          " " +
-                          d.gap_zone +
-                          " (" +
-                          (d3.format(".2f")(d.prob)*100).toFixed(0) +
-                          "%)")
+                            ": " + 
+                            d.direction + 
+                            " " +
+                            d.gap_zone +
+                            " (" +
+                            (d3.format(".2f")(d.prob)*100).toFixed(0) + "%)"
+                          )
           )
               
           // Update Table
