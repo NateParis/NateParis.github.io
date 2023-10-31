@@ -127,6 +127,63 @@
     position: absolute;
   }
   
+  #sliderContainer {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .sliderContainer label {
+    display: block;
+    font-weight: bold;
+    font-size: 20px;
+    color: white;
+    margin-bottom: 0px;
+    height: 40px;
+    top: -10px;
+  }
+  
+  .slider {
+    display: block;
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: -10px;
+    margin-bottom: 5px;
+    height: 40px;
+    width: 100%;
+    position: relative;
+  }
+  
+  
+  input[type="range"] {
+    width: 100%;
+  }
+  
+  .slider-label-left {
+    position: absolute;
+    font-size: 16px;
+    left: -33px;
+    top: 0;
+    color: white;
+  }
+  
+  .slider-label-right {
+    position: absolute;
+    font-size: 16px;
+    right: -40px;
+    top: 0;
+    color: white;
+  }
+  
+  .slider-value {
+    position: absolute;
+    font-size: 20px;
+    right: -35px;
+    top: -29px;
+    color: #B3A369;
+  }
+  
+  
   </style>
     
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rye&display=swap">
@@ -180,10 +237,13 @@
                 <select id = 'distanceDropdown'></select>
               </div>
             </div>            
-            <div class = 'dropdown1'>
-              <label for = 'losDropdown'>Line of Scrimmage:</label>
-              <div class = 'menu1'>
-                <select id = 'losDropdown'></select>
+            <div class="sliderContainer">
+              <label for="losSlider">Line of Scrimmage:</label>
+              <div class="slider">
+                <input id="losSlider" type="range">
+                <span class="slider-label-left">-GL</span>
+                <span class="slider-label-right">GL+</span>
+                <span class="slider-value">-35</span>
               </div>
             </div>
           </div>
@@ -373,18 +433,21 @@
   ///////////////////////////////////////////////////////////////////////////
     // Create All Dropdown Menus, except Team.
     
-    //// LOS Dropdown
+    //// LOS Slider
     const losValues = []
-    for (let i = 1; i<=49; i++){ losValues.push(i) }
+    for (let i = -1; i>=-49; i--){ losValues.push(i) }
       losValues.push(50)
-    for (let i = -49; i<=-1; i++){ losValues.push(i) }
-    losSelector = d3.select('#losDropdown')
-                    .style('position', 'absolute')
-    losOptions = losSelector.selectAll('option')
-                    .data(losValues)
-                    .enter().append('option')
-                    .attr('value', d => d)
-                    .text(d => d)
+    for (let i = 49; i>=1; i--){ losValues.push(i) }
+    const losSlider = d3.select('#losSlider')
+    const sliderVal = d3.select('.slider-value')
+    losSlider.attr('min', 1)
+             .attr('max', losValues.length)
+             .attr('value', losValues.indexOf(0) + 1)
+    losSlider.on('input', () => {
+      const value = losValues[losSlider.property('value') - 1]
+      sliderVal.text(value)
+    })
+
       
     //// Home Away Dropdown
     const offHomeAwayValues = [
@@ -833,6 +896,7 @@
         var secondary_hex = selectedTeam.secondary_hex
         
         // Place the LOS
+        console.log(selectedLOS)
         if (selectedLOS < 0) {
           var x = (margin.left - 50) + (10*3 + (-1*selectedLOS)*3)*(w/360) + (3.3 * 3)*(w/360)
         } else {
@@ -1156,7 +1220,8 @@
         const selectedQuarter = d3.select('#quarterDropdown').node().value
         const selectedDown = parseInt(d3.select('#downDropdown').node().value)
         const selectedDistance = d3.select('#distanceDropdown').node().value
-        const selectedLOS = parseInt(d3.select('#losDropdown').node().value)
+        var losIndx = parseInt(d3.select('#losSlider').node().value)-1
+        const selectedLOS = losValues[losIndx]
         const selectedHomeAway = d3.select('#offHomeAwayDropdown').node().value
         const selectedPointDiff = d3.select('#offPointDiffDropdown').node().value
         const selectedClock = d3.select('#gameClockDropdown').node().value
@@ -1351,7 +1416,8 @@
       // Create offense based on Selected LOS and Selected Team
       d3.select('#vizButton').on('click', function() {
         
-        const selectedLOS = parseInt(d3.select('#losDropdown').node().value)
+        var losIndx = parseInt(d3.select('#losSlider').node().value)-1
+        const selectedLOS = losValues[losIndx]
         const selectedTeamName = d3.select('#teamDropdown').node().value
         const selectedTeam = data.find(d => d.team === selectedTeamName)
         
@@ -1474,7 +1540,7 @@
       
       // Set Dropdown Defaults
       teamSelector.property('value', 'SF')
-      losSelector.property('value', '-35')
+      losSlider.property('value', '35')
       offHomeAwaySelector.property('value', 'Home')
       quarterSelector.property('value', '1st')
       gameClockSelector.property('value', '15:00-10:00')
