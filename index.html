@@ -96,7 +96,92 @@
   }
   
   .buttons {
-    font-size: 20;
+    font-size: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+  }
+  
+  #filterbutton {
+    height: auto;
+    margin-right: 30px;
+  }
+  
+  #vizButton {
+    height: auto;
+    margin: 0px 60px 0px 30px;
+  }
+  
+  #sliderContainer {
+    width: 100%;
+    margin-left: 30px;
+    text-align: center;
+  }
+  
+  .sliderContainer label {
+    display: block;
+    font-weight: bold;
+    font-size: 20px;
+    color: white;
+    margin-bottom: 0px;
+    height: 40px;
+    top: -10px;
+    width: 300px;
+  }
+  
+  .slider {
+    display: block;
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: -10px;
+    margin-bottom: 5px;
+    height: 40px;
+    width: 400px;
+    position: relative;
+  }
+  
+  input[type="range"] {
+    width: 100%;
+  }
+  
+  .ltSliderSpan {
+    position: absolute;
+    font-size: 16px;
+    left: -33px;
+    top: 0;
+    color: white;
+  }
+  
+  .rtSliderSpan {
+    position: absolute;
+    font-size: 16px;
+    right: -40px;
+    top: 0;
+    color: white;
+  }
+  
+  .slider-value {
+    position: absolute;
+    font-size: 20px;
+    left: 175px;
+    top: -29px;
+    color: #B3A369;
+  }
+  
+  .slider-ticks {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0;
+  }
+  
+  .slider-tick {
+    position: absolute;
+    color: white;
+    font-size: 10px;
   }
   
   .fieldSection {
@@ -125,62 +210,6 @@
     opacity: 0.85;
     font-size: 18px;
     position: absolute;
-  }
-  
-  #sliderContainer {
-    width: 100%;
-    margin: 0 auto;
-    text-align: center;
-  }
-  
-  .sliderContainer label {
-    display: block;
-    font-weight: bold;
-    font-size: 20px;
-    color: white;
-    margin-bottom: 0px;
-    height: 40px;
-    top: -10px;
-  }
-  
-  .slider {
-    display: block;
-    font-weight: bold;
-    font-size: 20px;
-    margin-top: -10px;
-    margin-bottom: 5px;
-    height: 40px;
-    width: 100%;
-    position: relative;
-  }
-  
-  
-  input[type="range"] {
-    width: 100%;
-  }
-  
-  .slider-label-left {
-    position: absolute;
-    font-size: 16px;
-    left: -33px;
-    top: 0;
-    color: white;
-  }
-  
-  .slider-label-right {
-    position: absolute;
-    font-size: 16px;
-    right: -40px;
-    top: 0;
-    color: white;
-  }
-  
-  .slider-value {
-    position: absolute;
-    font-size: 20px;
-    right: -35px;
-    top: -29px;
-    color: #B3A369;
   }
   
   
@@ -214,20 +243,20 @@
               </div>
             </div>
             <div class = 'dropdown1'>
+              <label for = 'quarterDropdown' style='margin-left: 45px'>Quarter:</label>
+              <div class = 'menu1' style='left: 60%'>
+                <select id = 'quarterDropdown' ></select>
+              </div>
+            </div>
+            <div class = 'dropdown1'>
               <label for = 'gameClockDropdown'>Game Clock:</label>
               <div class = 'menu1'>
                 <select id = 'gameClockDropdown'></select>
               </div>
             </div>
             <div class = 'dropdown1'>
-              <label for = 'quarterDropdown'>Quarter:</label>
-              <div class = 'menu1'>
-                <select id = 'quarterDropdown'></select>
-              </div>
-            </div>
-            <div class = 'dropdown1'>
-              <label for = 'downDropdown'>Down:</label>
-              <div class = 'menu1'>
+              <label for = 'downDropdown' style='margin-left: 35px'>Down:</label>
+              <div class = 'menu1' style='left: 50%'>
                 <select id = 'downDropdown'></select>
               </div>
             </div>            
@@ -237,27 +266,13 @@
                 <select id = 'distanceDropdown'></select>
               </div>
             </div>            
-            <div class="sliderContainer">
-              <label for="losSlider">Line of Scrimmage:</label>
-              <div class="slider">
-                <input id="losSlider" type="range">
-                <span class="slider-label-left">-GL</span>
-                <span class="slider-label-right">GL+</span>
-                <span class="slider-value">-35</span>
-              </div>
-            </div>
+            
           </div>
         <div class = 'dropdown_container2'>
           <div class = 'dropdown2'>
             <label for = 'offHomeAwayDropdown'>Home/Away:</label>
             <div class = 'menu2'>
               <select id = 'offHomeAwayDropdown'></select> 
-            </div>
-          </div>
-          <div class = 'dropdown2'>
-            <label for = 'offPointDiffDropdown'>Offensive Point Difference:</label>
-            <div class = 'menu2'>
-              <select id = 'offPointDiffDropdown'></select>
             </div>
           </div>
           <div class = 'dropdown2'>
@@ -272,11 +287,35 @@
               <select id = 'remainingDefTOsDropdown'></select>
             </div>
           </div>
+          <div class = 'dropdown2'>
+            <label for = 'offPointDiffDropdown'>Offensive Point Difference:</label>
+            <div class = 'menu2'>
+              <select id = 'offPointDiffDropdown'></select>
+            </div>
+          </div>
         </div>
       </div>
-     <div class = 'buttons'>
-          <button id = 'filterButton'>Click to Calculate Prediction</button>
-          <button id = 'vizButton'>Click to Visualize Prediction</button>
+      <div class = 'buttons'>
+        <button id = 'filterButton'>Click to Calculate Prediction</button>
+        <button id = 'vizButton'>Click to Visualize Prediction</button>
+        <div class="sliderContainer">
+              <label for="losSlider">Line of Scrimmage:</label>
+              <div class="slider">
+                <input id="losSlider" type="range">
+                <span class="ltSliderSpan">-GL</span>
+                <span class="rtSliderSpan">GL+</span>
+                <span class="slider-value">-25</span>
+                <div class="slider-ticks">
+                  <span class="slider-tick" style="left: 4%">< 5</span>
+                  <span class="slider-tick" style="left: 13%">< 15</span>
+                  <span class="slider-tick" style="left: 38%">< 40</span>
+                  <span class="slider-tick" style="left: 64%">35 ></span>
+                  <span class="slider-tick" style="left: 79%">20 ></span>
+                  <span class="slider-tick" style="left: 88%">10 ></span>
+                  <span class="slider-tick" style="left: 94%">5 ></span>
+                </div>
+              </div>
+            </div>
       </div>
      <div class = 'fieldSection'></div>
     </div>
@@ -1409,6 +1448,8 @@
         }).catch(function (error) {
           console.log(error)
         })
+      
+        
       })
       
       ////######################################################################
@@ -1464,7 +1505,7 @@
                          }
           }
           
-          new_opacity = d.prob ** (1/3)     // use cube root to adjust opacity
+          new_opacity = d.prob ** (1/2)     // use cube root to adjust opacity
           
           if (d.prob >= 0.10){
             new_radius = 5 * ( 10 / (1 + Math.exp(-8 * d.prob) ) ) - 25 // use sigmoid function to adjust radius
@@ -1540,7 +1581,7 @@
       
       // Set Dropdown Defaults
       teamSelector.property('value', 'SF')
-      losSlider.property('value', '35')
+      losSlider.property('value', '25')
       offHomeAwaySelector.property('value', 'Home')
       quarterSelector.property('value', '1st')
       gameClockSelector.property('value', '15:00-10:00')
