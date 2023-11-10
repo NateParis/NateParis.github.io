@@ -1,5 +1,33 @@
 team,primary_hex,secondary_hex,mascot,ez_font,logo_path
-SF,#AA0000,#B3995D,49ERS,Rye,midfield_logos/nfl-san-francisco-49ers-team-logo-2.png
-KC,#FFB81C,#E31837,CHIEFS,Jockey One,midfield_logos/nfl-kansas-city-chiefs-team-logo-2.png
-CHI,#C83803,#0B162A,BEARS,Passion One,midfield_logos/nfl-chicago-bears-team-logo-2.png
-PIT,#FFB612,#101820,Steelers,Keania One,midfield_logos/nfl-pittsburgh-steelers-team-logo-2.png
+ARI,#000000,#97233F,CARDINALS,ARI,midfield_logos/nfl-arizona-cardinals-team-logo-2.png
+ATL,#000000,#A71930,ATL,ATL,midfield_logos/nfl-atlanta-falcons-team-logo-2.png
+BAL,#241773,#9E7C0C,RAVENS,BAL,midfield_logos/nfl-baltimore-ravens-team-logo-2.png
+BUF,#00338D,#C60C30,BILLS,BUF,midfield_logos/nfl-buffalo-bills-team-logo-2.png
+CAR,#101820,#0085CA,PANTHERS,CAR,midfield_logos/nfl-carolina-panthers-team-logo-2.png
+CHI,#0B162A,#C83803,BEARS,CHI,midfield_logos/nfl-chicago-bears-team-logo-2.png
+CIN,#000000,#FB4F14 ,BENGALS,CIN,midfield_logos/nfl-cincinnati-bengals-team-logo.png
+CLE,#311D00,#FF3C00,BROWNS,CLE,midfield_logos/nfl-cleveland-browns-team-logo-2.png
+DAL,#003594,#869397,COWBOYS,DAL,midfield_logos/nfl-dallas-cowboys-team-logo-2.png
+DEN,#002244,#FB4F14,BRONCOS,DEN,midfield_logos/nfl-denver-broncos-team-logo-2.png
+DET,#0076B6,#B0B7BC,LIONS,DET,midfield_logos/nfl-detroit-lions-team-logo-2.png
+GB,#203731,#FFB612,PACKERS,GB,midfield_logos/nfl-green-bay-packers-team-logo-2.png
+HOU,#03202F,#A71930,TEXANS,HOU,midfield_logos/nfl-houston-texans-team-logo-2.png
+IND,#002C5F,#A2AAAD,COLTS,IND,midfield_logos/nfl-indianapolis-colts-team-logo-2.png
+JAX,#006778,#D7A22A,JAGUARS,JAX,midfield_logos/nfl-jacksonville-jaguars-team-logo-2.png
+KC,#E31837,#FFB81C,CHIEFS,KC,midfield_logos/nfl-kansas-city-chiefs-team-logo-2.png
+LA,#003594,#FFD100,RAMS,LA,midfield_logos/los-angeles-rams-2020-logo-1000x1000.png
+LAC,#0080C6,#FFC20E,CHARGERS,LAC,midfield_logos/nfl-los-angeles-chargers-team-logo-2.png
+LV,#000000,#A5ACAF,RAIDERS,LV,midfield_logos/nfl-oakland-raiders-team-logo.png
+MIA,#008E97,#FC4C02,Dolphins,MIA,midfield_logos/Miami-Dolphins-Logo-1000x1000.png
+MIN,#4F2683,#FFC62F,VIKINGS,MIN,midfield_logos/nfl-minnesota-vikings-team-logo-2.png
+NE,#002244,#C60C30,PATRIOTS,NE,midfield_logos/nfl-new-england-patriots-team-logo-2.png
+NO,#101820,#D3BC8D,SAINTS,NO,midfield_logos/nfl-new-orleans-saints-team-logo-2.png
+NYG,#0B2265,#A71930,GIANTS,NYG,midfield_logos/nfl-new-york-giants-team-logo-2.png
+NYJ,#125740,#FFFFFF,Jets,NYJ,midfield_logos/nfl-new-york-jets-team-logo.png
+PHI,#004C54 ,#A5ACAF,EAGLES,PHI,midfield_logos/nfl-philadelphia-eagles-team-logo-2.png
+PIT,#101820,#FFB612,Steelers,PIT,midfield_logos/nfl-pittsburgh-steelers-team-logo-2.png
+SEA,#002244,#69BE28,Seahawks,SEA,midfield_logos/nfl-seattle-seahawks-team-logo-2.png
+SF,#AA0000,#B3995D,49ERS,SF,midfield_logos/nfl-san-francisco-49ers-team-logo-2.png
+TB,#D50A0A,#B0B9BF,BUCCANEERS,TB,midfield_logos/tampa-bay-buccaneers-2020-logo-1024x1024.png
+TEN,#0C2340,#4B92DB,TitanS,TEN,midfield_logos/nfl-tennessee-titans-team-logo-2.png
+WAS,#5A1414,#FFB612,COMMANDERS,WAS,midfield_logos/washington-commanders-logo.png
